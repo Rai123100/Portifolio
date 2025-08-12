@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit Project' if project else 'New Project' }} - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="admin-header mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('admin_dashboard') }}">
+                                <i class="fas fa-cog me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('admin_projects') }}">Projects</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            {{ 'Edit Project' if project else 'New Project' }}
+                        </li>
+                    </ol>
+                </nav>
+                <h1 class="display-6 fw-bold text-gradient mb-2">
+                    <i class="fas fa-{{ 'edit' if project else 'plus' }} me-2"></i>
+                    {{ 'Edit Project' if project else 'New Project' }}
+                </h1>
+                <p class="text-muted">
+                    {{ 'Update your mission details' if project else 'Create a new mission for your portfolio' }}
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="{{ url_for('admin_projects') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Projects
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Form -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="project-form-card card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-rocket me-2"></i>Project Details
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Title -->
+                        <div class="mb-4">
+                            {{ form.title.label(class="form-label fw-semibold") }}
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-heading"></i>
+                                </span>
+                                {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else ""), placeholder="Enter project title...") }}
+                            </div>
+                            {% for error in form.title.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">Give your project a compelling title</div>
+                        </div>
+
+                        <!-- Short Description -->
+                        <div class="mb-4">
+                            {{ form.short_description.label(class="form-label fw-semibold") }}
+                            <div class="input-group">
+                                <span class="input-group-text align-items-start pt-2">
+                                    <i class="fas fa-align-left"></i>
+                                </span>
+                                {{ form.short_description(class="form-control" + (" is-invalid" if form.short_description.errors else ""), rows="3", placeholder="Brief description that appears on project cards...") }}
+                            </div>
+                            {% for error in form.short_description.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">
+                                <span id="shortDescCount">0</span>/300 characters - This appears on project cards
+                            </div>
+                        </div>
+
+                        <!-- Full Description -->
+                        <div class="mb-4">
+                            {{ form.description.label(class="form-label fw-semibold") }}
+                            <div class="input-group">
+                                <span class="input-group-text align-items-start pt-2">
+                                    <i class="fas fa-file-alt"></i>
+                                </span>
+                                {{ form.description(class="form-control" + (" is-invalid" if form.description.errors else ""), rows="8", placeholder="Detailed project description with features, technologies used, challenges overcome...") }}
+                            </div>
+                            {% for error in form.description.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">Full project description with markdown support</div>
+                        </div>
+
+                        <!-- Project Image -->
+                        <div class="mb-4">
+                            {{ form.image.label(class="form-label fw-semibold") }}
+                            <div class="image-upload-section">
+                                {{ form.image(class="form-control" + (" is-invalid" if form.image.errors else ""), accept="image/*") }}
+                                {% for error in form.image.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Upload project screenshot or preview (JPG, PNG, GIF - Max 16MB)
+                                </div>
+                                
+                                <!-- Current Image Preview -->
+                                {% if project and project.image %}
+                                <div class="current-image mt-3">
+                                    <label class="form-label">Current Image:</label>
+                                    <div class="current-image-container">
+                                        <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
+                                             alt="{{ project.title }}" class="current-project-image">
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                <!-- New Image Preview -->
+                                <div class="image-preview mt-3" id="imagePreview" style="display: none;">
+                                    <label class="form-label">New Image Preview:</label>
+                                    <div class="preview-container">
+                                        <img id="previewImg" src="" alt="Preview" class="preview-image">
+                                        <button type="button" class="btn btn-sm btn-outline-danger remove-image" id="removeImage">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Links Section -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.demo_link.label(class="form-label fw-semibold") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </span>
+                                        {{ form.demo_link(class="form-control" + (" is-invalid" if form.demo_link.errors else ""), placeholder="https://demo.example.com") }}
+                                    </div>
+                                    {% for error in form.demo_link.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.github_link.label(class="form-label fw-semibold") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        {{ form.github_link(class="form-control" + (" is-invalid" if form.github_link.errors else ""), placeholder="https://github.com/username/repo") }}
+                                    </div>
+                                    {% for error in form.github_link.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mb-4">
+                            {{ form.tags.label(class="form-label fw-semibold") }}
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-tags"></i>
+                                </span>
+                                {{ form.tags(class="form-control" + (" is-invalid" if form.tags.errors else ""), placeholder="React, Node.js, MongoDB, CSS3, HTML5") }}
+                            </div>
+                            {% for error in form.tags.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">Separate tags with commas (e.g., React, Node.js, MongoDB)</div>
+                        </div>
+
+                        <!-- Settings -->
+                        <div class="project-settings mb-4">
+                            <h6 class="fw-semibold text-primary mb-3">
+                                <i class="fas fa-cogs me-2"></i>Project Settings
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch mb-3">
+                                        {{ form.is_published(class="form-check-input") }}
+                                        {{ form.is_published.label(class="form-check-label") }}
+                                        <div class="form-text">Make this project visible to visitors</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch mb-3">
+                                        {{ form.featured(class="form-check-input") }}
+                                        {{ form.featured.label(class="form-check-label") }}
+                                        <div class="form-text">Highlight on homepage</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="form-actions">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-{{ 'save' if project else 'rocket' }} me-2"></i>
+                                    {{ 'Update Project' if project else 'Launch Project' }}
+                                </button>
+                                <a href="{{ url_for('admin_projects') }}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </a>
+                                {% if project %}
+                                <a href="{{ url_for('project_detail', project_id=project.id) }}" 
+                                   class="btn btn-outline-info btn-lg" target="_blank">
+                                    <i class="fas fa-eye me-2"></i>Preview
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="project-help-sidebar">
+                <!-- Tips Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="card-title mb-0">
+                            <i class="fas fa-lightbulb me-2"></i>Project Tips
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Use high-quality screenshots
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Write compelling descriptions
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Add relevant technology tags
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Include live demo links
+                            </li>
+                            <li class="mb-0">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Feature your best projects
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                {% if project %}
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title mb-0">
+                            <i class="fas fa-chart-bar me-2"></i>Project Stats
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat-item d-flex justify-content-between mb-2">
+                            <span>Likes:</span>
+                            <span class="badge bg-primary">{{ project.like_count }}</span>
+                        </div>
+                        <div class="stat-item d-flex justify-content-between mb-2">
+                            <span>Comments:</span>
+                            <span class="badge bg-secondary">{{ project.comment_count }}</span>
+                        </div>
+                        <div class="stat-item d-flex justify-content-between mb-2">
+                            <span>Status:</span>
+                            <span class="badge bg-{{ 'success' if project.is_published else 'warning' }}">
+                                {{ 'Published' if project.is_published else 'Draft' }}
+                            </span>
+                        </div>
+                        <div class="stat-item d-flex justify-content-between">
+                            <span>Featured:</span>
+                            <span class="badge bg-{{ 'info' if project.featured else 'secondary' }}">
+                                {{ 'Yes' if project.featured else 'No' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Character counter for short description
+document.getElementById('short_description').addEventListener('input', function() {
+    const counter = document.getElementById('shortDescCount');
+    counter.textContent = this.value.length;
+    
+    if (this.value.length > 280) {
+        counter.style.color = '#dc3545';
+    } else if (this.value.length > 250) {
+        counter.style.color = '#fd7e14';
+    } else {
+        counter.style.color = '#6c757d';
+    }
+});
+
+// Initial count
+document.addEventListener('DOMContentLoaded', function() {
+    const shortDesc = document.getElementById('short_description');
+    const counter = document.getElementById('shortDescCount');
+    if (shortDesc && counter) {
+        counter.textContent = shortDesc.value.length;
+    }
+});
+
+// Image preview functionality
+document.getElementById('image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+    }
+});
+
+// Remove image functionality
+document.getElementById('removeImage').addEventListener('click', function() {
+    document.getElementById('image').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+});
+
+// Auto-resize textareas
+document.querySelectorAll('textarea').forEach(textarea => {
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.max(this.scrollHeight, 100) + 'px';
+    });
+    
+    // Initial resize
+    textarea.style.height = Math.max(textarea.scrollHeight, 100) + 'px';
+});
+
+// Form validation feedback
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('input[required], textarea[required]');
+    
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            }
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid') && this.value.trim() !== '') {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            }
+        });
+    });
+});
+
+// Save draft functionality (auto-save)
+let autoSaveTimer;
+const form = document.querySelector('form');
+
+function autoSave() {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+        // Here you could implement auto-save functionality
+        console.log('Auto-saving draft...');
+    }, 30000); // Auto-save every 30 seconds
+}
+
+form.addEventListener('input', autoSave);
+</script>
+{% endblock %}

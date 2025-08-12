@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Astronaut Portfolio{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Profile Header -->
+            <div class="profile-header text-center mb-5">
+                <div class="profile-avatar-container">
+                    <div class="profile-avatar">
+                        {% if user.profile_image and user.profile_image != 'default-avatar.svg' %}
+                        <img src="{{ url_for('static', filename='uploads/' + user.profile_image) }}" 
+                             alt="{{ user.full_name }}" class="profile-image">
+                        {% else %}
+                        <div class="avatar-placeholder">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
+                        {% endif %}
+                        <div class="avatar-orbit">
+                            <i class="fas fa-star star-1"></i>
+                            <i class="fas fa-star star-2"></i>
+                            <i class="fas fa-satellite satellite"></i>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="display-5 fw-bold text-gradient mt-4 mb-2">{{ user.full_name }}</h1>
+                <p class="lead text-muted mb-3">@{{ user.username }}</p>
+                <div class="profile-meta">
+                    <span class="badge bg-primary me-2">
+                        {% if user.is_admin %}
+                        <i class="fas fa-crown me-1"></i>Administrator
+                        {% else %}
+                        <i class="fas fa-user me-1"></i>Crew Member
+                        {% endif %}
+                    </span>
+                    <span class="text-muted">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        Joined {{ user.created_at.strftime('%B %Y') }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Profile Form -->
+            <div class="profile-form-card card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-user-edit me-2"></i>Update Profile
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Full Name -->
+                        <div class="mb-4">
+                            {{ form.full_name.label(class="form-label fw-semibold") }}
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-id-card"></i>
+                                </span>
+                                {{ form.full_name(class="form-control" + (" is-invalid" if form.full_name.errors else "")) }}
+                            </div>
+                            {% for error in form.full_name.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">This is how your name appears to other users</div>
+                        </div>
+
+                        <!-- Profile Image -->
+                        <div class="mb-4">
+                            {{ form.profile_image.label(class="form-label fw-semibold") }}
+                            <div class="profile-image-upload">
+                                {{ form.profile_image(class="form-control" + (" is-invalid" if form.profile_image.errors else ""), accept="image/*") }}
+                                {% for error in form.profile_image.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Upload a new profile picture (JPG, PNG, GIF - Max 16MB)
+                                </div>
+                                
+                                <!-- Current Image -->
+                                {% if user.profile_image and user.profile_image != 'default-avatar.svg' %}
+                                <div class="current-image mt-3">
+                                    <label class="form-label">Current Profile Picture:</label>
+                                    <div class="current-image-container">
+                                        <img src="{{ url_for('static', filename='uploads/' + user.profile_image) }}" 
+                                             alt="{{ user.full_name }}" class="current-profile-image">
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                <!-- Image Preview -->
+                                <div class="image-preview mt-3" id="imagePreview" style="display: none;">
+                                    <label class="form-label">New Profile Picture Preview:</label>
+                                    <div class="preview-container">
+                                        <img id="previewImg" src="" alt="Preview" class="preview-image">
+                                        <button type="button" class="btn btn-sm btn-outline-danger remove-image" id="removeImage">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Information (Read-only) -->
+                        <div class="account-info mb-4">
+                            <h6 class="fw-semibold text-primary mb-3">
+                                <i class="fas fa-info-circle me-2"></i>Account Information
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-item mb-3">
+                                        <label class="form-label">Username</label>
+                                        <div class="form-control-plaintext border rounded px-3 py-2 bg-light">
+                                            <i class="fas fa-user me-2"></i>{{ user.username }}
+                                        </div>
+                                        <div class="form-text">Your unique identifier (cannot be changed)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-item mb-3">
+                                        <label class="form-label">Email Address</label>
+                                        <div class="form-control-plaintext border rounded px-3 py-2 bg-light">
+                                            <i class="fas fa-envelope me-2"></i>{{ user.email }}
+                                        </div>
+                                        <div class="form-text">Your email address (contact admin to change)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Update Profile
+                            </button>
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg ms-2">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Home
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Activity Summary -->
+            <div class="activity-summary mt-5">
+                <div class="section-header mb-4">
+                    <h3 class="h4 text-gradient">
+                        <i class="fas fa-chart-line me-2"></i>Your Activity
+                    </h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="activity-stat card text-center">
+                            <div class="card-body">
+                                <div class="stat-icon text-primary mb-2">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <h4 class="stat-number">{{ user.comments | length }}</h4>
+                                <p class="stat-label text-muted mb-0">Comments Made</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="activity-stat card text-center">
+                            <div class="card-body">
+                                <div class="stat-icon text-success mb-2">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h4 class="stat-number">{{ user.likes | length }}</h4>
+                                <p class="stat-label text-muted mb-0">Projects Liked</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="activity-stat card text-center">
+                            <div class="card-body">
+                                <div class="stat-icon text-info mb-2">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <h4 class="stat-number">{{ (now() - user.created_at).days }}</h4>
+                                <p class="stat-label text-muted mb-0">Days Active</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Comments -->
+            {% if user.comments %}
+            <div class="recent-comments mt-5">
+                <div class="section-header mb-4">
+                    <h3 class="h4 text-gradient">
+                        <i class="fas fa-clock me-2"></i>Recent Comments
+                    </h3>
+                </div>
+                <div class="comments-list">
+                    {% for comment in user.comments[:5] %}
+                    <div class="comment-item card mb-3">
+                        <div class="card-body">
+                            <div class="comment-header d-flex justify-content-between align-items-start mb-2">
+                                <div class="comment-project">
+                                    <strong>On project:</strong> 
+                                    <a href="{{ url_for('project_detail', project_id=comment.project.id) }}" 
+                                       class="text-primary">{{ comment.project.title }}</a>
+                                </div>
+                                <small class="text-muted">
+                                    {{ comment.created_at.strftime('%B %d, %Y') }}
+                                </small>
+                            </div>
+                            <p class="comment-content mb-0">{{ comment.content }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if user.comments | length > 5 %}
+                    <div class="text-center">
+                        <p class="text-muted">And {{ user.comments | length - 5 }} more comments...</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Security Section -->
+            <div class="security-section mt-5">
+                <div class="section-header mb-4">
+                    <h3 class="h4 text-gradient">
+                        <i class="fas fa-shield-alt me-2"></i>Account Security
+                    </h3>
+                </div>
+                <div class="security-info card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="security-icon me-3">
+                                <i class="fas fa-lock text-success"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Password Protected</h6>
+                                <p class="text-muted mb-0">Your account is secured with a strong password</p>
+                            </div>
+                            <div class="security-action">
+                                <button class="btn btn-outline-secondary btn-sm" disabled>
+                                    <i class="fas fa-key me-1"></i>Change Password
+                                </button>
+                                <div class="form-text mt-1">Contact admin for password changes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Image preview functionality
+document.getElementById('profile_image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+    }
+});
+
+// Remove image functionality
+document.getElementById('removeImage').addEventListener('click', function() {
+    document.getElementById('profile_image').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+});
+
+// Form validation
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const fullNameInput = document.getElementById('full_name');
+    
+    fullNameInput.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+            this.classList.add('is-invalid');
+        } else {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        }
+    });
+    
+    fullNameInput.addEventListener('input', function() {
+        if (this.classList.contains('is-invalid') && this.value.trim() !== '') {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        }
+    });
+});
+
+// Animate profile elements on load
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate profile avatar
+    const avatar = document.querySelector('.profile-avatar');
+    avatar.style.opacity = '0';
+    avatar.style.transform = 'scale(0.8)';
+    avatar.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    
+    setTimeout(() => {
+        avatar.style.opacity = '1';
+        avatar.style.transform = 'scale(1)';
+    }, 200);
+    
+    // Animate stats
+    const stats = document.querySelectorAll('.activity-stat');
+    stats.forEach((stat, index) => {
+        stat.style.opacity = '0';
+        stat.style.transform = 'translateY(20px)';
+        stat.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        stat.style.transitionDelay = `${index * 0.1}s`;
+        
+        setTimeout(() => {
+            stat.style.opacity = '1';
+            stat.style.transform = 'translateY(0)';
+        }, 300);
+    });
+});
+
+// Add hover effects to action buttons
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        if (!this.disabled) {
+            this.style.transform = 'translateY(-2px)';
+        }
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,399 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Projects - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="admin-header mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('admin_dashboard') }}">
+                                <i class="fas fa-cog me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">Projects</li>
+                    </ol>
+                </nav>
+                <h1 class="display-6 fw-bold text-gradient mb-2">
+                    <i class="fas fa-satellite me-2"></i>Project Management
+                </h1>
+                <p class="text-muted">Manage your portfolio missions</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="{{ url_for('admin_project_form') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus me-2"></i>New Project
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Table -->
+    <div class="projects-table-card card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+                <i class="fas fa-rocket me-2"></i>All Projects
+            </h5>
+            <div class="table-actions">
+                <div class="btn-group btn-group-sm" role="group">
+                    <input type="radio" class="btn-check" name="filter" id="all" checked>
+                    <label class="btn btn-outline-secondary" for="all">All</label>
+                    
+                    <input type="radio" class="btn-check" name="filter" id="published">
+                    <label class="btn btn-outline-secondary" for="published">Published</label>
+                    
+                    <input type="radio" class="btn-check" name="filter" id="draft">
+                    <label class="btn btn-outline-secondary" for="draft">Draft</label>
+                    
+                    <input type="radio" class="btn-check" name="filter" id="featured">
+                    <label class="btn btn-outline-secondary" for="featured">Featured</label>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            {% if projects.items %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" style="width: 60px;">Image</th>
+                            <th scope="col">Title</th>
+                            <th scope="col" style="width: 100px;">Status</th>
+                            <th scope="col" style="width: 80px;">Likes</th>
+                            <th scope="col" style="width: 100px;">Comments</th>
+                            <th scope="col" style="width: 120px;">Created</th>
+                            <th scope="col" style="width: 140px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects.items %}
+                        <tr class="project-row" 
+                            data-status="{{ 'published' if project.is_published else 'draft' }}"
+                            data-featured="{{ 'true' if project.featured else 'false' }}">
+                            <td>
+                                <div class="project-thumbnail">
+                                    <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
+                                         alt="{{ project.title }}" class="table-project-image"
+                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjMUExQTFBIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjgiIGZpbGw9IiM0Qzc2RkYiLz4KPHN2Zz4K'">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="project-info">
+                                    <h6 class="project-title mb-1">
+                                        {{ project.title }}
+                                        {% if project.featured %}
+                                        <i class="fas fa-star text-warning ms-1" title="Featured"></i>
+                                        {% endif %}
+                                    </h6>
+                                    <p class="project-description text-muted mb-0">
+                                        {{ project.short_description[:80] }}{% if project.short_description|length > 80 %}...{% endif %}
+                                    </p>
+                                    {% if project.tag_list %}
+                                    <div class="project-tags mt-1">
+                                        {% for tag in project.tag_list[:3] %}
+                                        <span class="table-tag">{{ tag }}</span>
+                                        {% endfor %}
+                                        {% if project.tag_list|length > 3 %}
+                                        <span class="table-tag">+{{ project.tag_list|length - 3 }}</span>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-badges">
+                                    <span class="badge bg-{{ 'success' if project.is_published else 'warning' }}">
+                                        {{ 'Published' if project.is_published else 'Draft' }}
+                                    </span>
+                                    {% if project.featured %}
+                                    <span class="badge bg-info mt-1">Featured</span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                <span class="stat-value">
+                                    <i class="fas fa-heart text-primary me-1"></i>
+                                    {{ project.like_count }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="stat-value">
+                                    <i class="fas fa-comments text-secondary me-1"></i>
+                                    {{ project.comment_count }}
+                                </span>
+                            </td>
+                            <td>
+                                <small class="text-muted">{{ project.created_at.strftime('%b %d, %Y') }}</small>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{{ url_for('project_detail', project_id=project.id) }}" 
+                                           class="btn btn-outline-info" title="View" target="_blank">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ url_for('admin_project_form', project_id=project.id) }}" 
+                                           class="btn btn-outline-primary" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button class="btn btn-outline-danger delete-project" 
+                                                data-project-id="{{ project.id }}"
+                                                data-project-title="{{ project.title }}"
+                                                title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if projects.pages > 1 %}
+            <div class="card-footer">
+                <nav aria-label="Projects pagination">
+                    <ul class="pagination justify-content-center mb-0">
+                        {% if projects.has_prev %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('admin_projects', page=projects.prev_num) }}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for page_num in projects.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                {% if page_num != projects.page %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('admin_projects', page=page_num) }}">
+                                        {{ page_num }}
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ page_num }}</span>
+                                </li>
+                                {% endif %}
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if projects.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('admin_projects', page=projects.next_num) }}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <!-- Empty State -->
+            <div class="empty-state text-center py-5">
+                <div class="empty-icon mb-4">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h4 class="text-muted mb-3">No Projects Yet</h4>
+                <p class="text-muted mb-4">
+                    Ready to launch your first mission? Create your first project to get started!
+                </p>
+                <a href="{{ url_for('admin_project_form') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Create First Project
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    {% if projects.total > 0 %}
+    <div class="projects-stats mt-4">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card card text-center">
+                    <div class="card-body">
+                        <div class="stat-icon text-primary mb-2">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4 class="stat-number">{{ projects.total }}</h4>
+                        <p class="stat-label text-muted mb-0">Total Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card card text-center">
+                    <div class="card-body">
+                        <div class="stat-icon text-success mb-2">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h4 class="stat-number">{{ projects.items | selectattr('is_published') | list | length }}</h4>
+                        <p class="stat-label text-muted mb-0">Published</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card card text-center">
+                    <div class="card-body">
+                        <div class="stat-icon text-info mb-2">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4 class="stat-number">{{ projects.items | selectattr('featured') | list | length }}</h4>
+                        <p class="stat-label text-muted mb-0">Featured</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="stat-card card text-center">
+                    <div class="card-body">
+                        <div class="stat-icon text-warning mb-2">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4 class="stat-number">{{ projects.items | sum(attribute='like_count') }}</h4>
+                        <p class="stat-label text-muted mb-0">Total Likes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                    Confirm Deletion
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the project <strong id="projectToDelete"></strong>?</p>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    This action cannot be undone. All associated comments and likes will also be deleted.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </button>
+                <form id="deleteForm" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>Delete Project
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Delete project functionality
+document.querySelectorAll('.delete-project').forEach(button => {
+    button.addEventListener('click', function() {
+        const projectId = this.dataset.projectId;
+        const projectTitle = this.dataset.projectTitle;
+        
+        document.getElementById('projectToDelete').textContent = projectTitle;
+        document.getElementById('deleteForm').action = `/admin/project/${projectId}/delete`;
+        
+        new bootstrap.Modal(document.getElementById('deleteModal')).show();
+    });
+});
+
+// Filter functionality
+document.querySelectorAll('input[name="filter"]').forEach(filter => {
+    filter.addEventListener('change', function() {
+        const filterValue = this.id;
+        const rows = document.querySelectorAll('.project-row');
+        
+        rows.forEach(row => {
+            let show = false;
+            
+            if (filterValue === 'all') {
+                show = true;
+            } else if (filterValue === 'published') {
+                show = row.dataset.status === 'published';
+            } else if (filterValue === 'draft') {
+                show = row.dataset.status === 'draft';
+            } else if (filterValue === 'featured') {
+                show = row.dataset.featured === 'true';
+            }
+            
+            if (show) {
+                row.style.display = '';
+                row.style.opacity = '0';
+                setTimeout(() => {
+                    row.style.transition = 'opacity 0.3s ease';
+                    row.style.opacity = '1';
+                }, 10);
+            } else {
+                row.style.transition = 'opacity 0.3s ease';
+                row.style.opacity = '0';
+                setTimeout(() => {
+                    row.style.display = 'none';
+                }, 300);
+            }
+        });
+        
+        // Update visible count
+        setTimeout(() => {
+            const visibleRows = document.querySelectorAll('.project-row[style=""], .project-row:not([style])');
+            console.log(`Showing ${visibleRows.length} projects`);
+        }, 350);
+    });
+});
+
+// Table row animations
+document.addEventListener('DOMContentLoaded', function() {
+    const rows = document.querySelectorAll('.project-row');
+    rows.forEach((row, index) => {
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(-20px)';
+        row.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        row.style.transitionDelay = `${index * 0.05}s`;
+        
+        setTimeout(() => {
+            row.style.opacity = '1';
+            row.style.transform = 'translateX(0)';
+        }, 100);
+    });
+});
+
+// Hover effects for action buttons
+document.querySelectorAll('.action-buttons .btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.1)';
+    });
+    
+    btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+    });
+});
+
+// Auto-refresh every 5 minutes
+setInterval(() => {
+    // Only refresh if no modals are open
+    if (!document.querySelector('.modal.show')) {
+        window.location.reload();
+    }
+}, 300000);
+</script>
+{% endblock %}

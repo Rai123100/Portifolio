@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Astronaut Portfolio{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="auth-card">
+                <div class="auth-header text-center mb-4">
+                    <div class="auth-icon mb-3">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <h2 class="h3 text-gradient mb-2">Join the Space Crew!</h2>
+                    <p class="text-muted">Create your account to start exploring</p>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.username.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
+                                </div>
+                                {% for error in form.username.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                <div class="form-text">Choose a unique username (3-20 characters)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.full_name.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-id-card"></i>
+                                    </span>
+                                    {{ form.full_name(class="form-control" + (" is-invalid" if form.full_name.errors else "")) }}
+                                </div>
+                                {% for error in form.full_name.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                        </div>
+                        {% for error in form.email.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.password.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                {% for error in form.password.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                <div class="form-text">Minimum 6 characters</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.password2.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    {{ form.password2(class="form-control" + (" is-invalid" if form.password2.errors else "")) }}
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                {% for error in form.password2.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form.profile_image.label(class="form-label") }}
+                        <div class="profile-upload">
+                            {{ form.profile_image(class="form-control" + (" is-invalid" if form.profile_image.errors else ""), accept="image/*") }}
+                            {% for error in form.profile_image.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Optional: Upload a profile picture (JPG, PNG, GIF - Max 16MB)
+                            </div>
+                        </div>
+                        
+                        <!-- Image Preview -->
+                        <div class="image-preview mt-3" id="imagePreview" style="display: none;">
+                            <div class="preview-container">
+                                <img id="previewImg" src="" alt="Preview" class="preview-image">
+                                <button type="button" class="btn btn-sm btn-outline-danger remove-image" id="removeImage">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Start Mission
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-muted">
+                            Already part of the crew? 
+                            <a href="{{ url_for('login') }}" class="text-primary">Login here</a>
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Space themed decoration -->
+                <div class="auth-decoration">
+                    <i class="fas fa-star star-1"></i>
+                    <i class="fas fa-star star-2"></i>
+                    <i class="fas fa-star star-3"></i>
+                    <i class="fas fa-satellite satellite"></i>
+                    <i class="fas fa-rocket rocket"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Toggle password visibility
+function togglePasswordField(fieldId, toggleId) {
+    document.getElementById(toggleId).addEventListener('click', function() {
+        const passwordField = document.getElementById(fieldId);
+        const toggleIcon = this.querySelector('i');
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    });
+}
+
+togglePasswordField('password', 'togglePassword');
+togglePasswordField('password2', 'togglePassword2');
+
+// Image preview functionality
+document.getElementById('profile_image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+    }
+});
+
+// Remove image functionality
+document.getElementById('removeImage').addEventListener('click', function() {
+    document.getElementById('profile_image').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+});
+
+// Form validation feedback
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('input[required]');
+    
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            }
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid') && this.value.trim() !== '') {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            }
+        });
+    });
+    
+    // Password confirmation validation
+    const password = document.getElementById('password');
+    const password2 = document.getElementById('password2');
+    
+    function validatePasswordMatch() {
+        if (password2.value && password.value !== password2.value) {
+            password2.setCustomValidity('Passwords do not match');
+            password2.classList.add('is-invalid');
+        } else {
+            password2.setCustomValidity('');
+            if (password2.value) {
+                password2.classList.remove('is-invalid');
+                password2.classList.add('is-valid');
+            }
+        }
+    }
+    
+    password.addEventListener('input', validatePasswordMatch);
+    password2.addEventListener('input', validatePasswordMatch);
+});
+
+// Form animation
+document.addEventListener('DOMContentLoaded', function() {
+    const authCard = document.querySelector('.auth-card');
+    authCard.style.opacity = '0';
+    authCard.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        authCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        authCard.style.opacity = '1';
+        authCard.style.transform = 'translateY(0)';
+    }, 100);
+});
+
+// Add floating animation to decoration elements
+document.querySelectorAll('.auth-decoration i').forEach((element, index) => {
+    element.style.animationDelay = `${index * 0.3}s`;
+});
+</script>
+{% endblock %}

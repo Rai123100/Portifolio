@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Astronaut Portfolio{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header mb-5">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-5 fw-bold text-gradient mb-3">
+                    <i class="fas fa-cog me-3"></i>Mission Control Center
+                </h1>
+                <p class="lead text-muted">
+                    Welcome back, Commander! Here's your space station overview.
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a href="{{ url_for('admin_project_form') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus me-2"></i>New Project
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid mb-5">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="stat-icon text-primary mb-3">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="stat-number text-gradient">{{ total_projects }}</h3>
+                        <h6 class="stat-label text-muted">Total Projects</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="stat-icon text-success mb-3">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="stat-number text-gradient">{{ published_projects }}</h3>
+                        <h6 class="stat-label text-muted">Published</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="stat-icon text-info mb-3">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="stat-number text-gradient">{{ total_users }}</h3>
+                        <h6 class="stat-label text-muted">Crew Members</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="stat-icon text-warning mb-3">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="stat-number text-gradient">{{ total_comments }}</h3>
+                        <h6 class="stat-label text-muted">Comments</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions mb-5">
+        <div class="section-header mb-4">
+            <h2 class="h3 text-gradient">
+                <i class="fas fa-bolt me-2"></i>Quick Actions
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ url_for('admin_project_form') }}" class="action-card card text-decoration-none">
+                    <div class="card-body text-center">
+                        <i class="fas fa-plus-circle text-primary mb-2"></i>
+                        <h6 class="card-title">Create Project</h6>
+                        <p class="card-text text-muted small">Launch a new mission</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ url_for('admin_projects') }}" class="action-card card text-decoration-none">
+                    <div class="card-body text-center">
+                        <i class="fas fa-satellite text-success mb-2"></i>
+                        <h6 class="card-title">Manage Projects</h6>
+                        <p class="card-text text-muted small">View and edit missions</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ url_for('projects') }}" class="action-card card text-decoration-none">
+                    <div class="card-body text-center">
+                        <i class="fas fa-eye text-info mb-2"></i>
+                        <h6 class="card-title">View Site</h6>
+                        <p class="card-text text-muted small">See public portfolio</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ url_for('profile') }}" class="action-card card text-decoration-none">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-cog text-warning mb-2"></i>
+                        <h6 class="card-title">Profile Settings</h6>
+                        <p class="card-text text-muted small">Update your info</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    {% if recent_comments %}
+    <div class="recent-activity">
+        <div class="section-header mb-4">
+            <h2 class="h3 text-gradient">
+                <i class="fas fa-clock me-2"></i>Recent Comments
+            </h2>
+        </div>
+        <div class="activity-list">
+            {% for comment in recent_comments %}
+            <div class="activity-item card mb-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <div class="activity-avatar me-3">
+                            {% if comment.author.profile_image and comment.author.profile_image != 'default-avatar.svg' %}
+                            <img src="{{ url_for('static', filename='uploads/' + comment.author.profile_image) }}" 
+                                 alt="{{ comment.author.full_name }}" class="avatar-sm">
+                            {% else %}
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="activity-content flex-grow-1">
+                            <div class="activity-header mb-2">
+                                <strong>{{ comment.author.full_name }}</strong>
+                                <span class="text-muted">commented on</span>
+                                <a href="{{ url_for('project_detail', project_id=comment.project.id) }}" 
+                                   class="text-primary">{{ comment.project.title }}</a>
+                                <small class="text-muted ms-2">
+                                    {{ comment.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                                </small>
+                            </div>
+                            <p class="activity-text text-muted mb-0">{{ comment.content[:150] }}{% if comment.content|length > 150 %}...{% endif %}</p>
+                        </div>
+                        <div class="activity-actions">
+                            <a href="{{ url_for('project_detail', project_id=comment.project.id) }}#comments" 
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-reply"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- System Status -->
+    <div class="system-status mt-5">
+        <div class="section-header mb-4">
+            <h2 class="h3 text-gradient">
+                <i class="fas fa-satellite-dish me-2"></i>System Status
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="status-item card">
+                    <div class="card-body text-center">
+                        <div class="status-icon text-success mb-2">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h6 class="status-title">Portfolio Online</h6>
+                        <small class="text-muted">All systems operational</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="status-item card">
+                    <div class="card-body text-center">
+                        <div class="status-icon text-success mb-2">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h6 class="status-title">Database Connected</h6>
+                        <small class="text-muted">Data sync active</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="status-item card">
+                    <div class="card-body text-center">
+                        <div class="status-icon text-success mb-2">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h6 class="status-title">Security Active</h6>
+                        <small class="text-muted">Protected & secure</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Animate stats on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate stat numbers
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach(stat => {
+        const finalNumber = parseInt(stat.textContent);
+        let currentNumber = 0;
+        const increment = finalNumber / 30;
+        const timer = setInterval(() => {
+            currentNumber += increment;
+            if (currentNumber >= finalNumber) {
+                currentNumber = finalNumber;
+                clearInterval(timer);
+            }
+            stat.textContent = Math.floor(currentNumber);
+        }, 50);
+    });
+    
+    // Animate cards
+    const cards = document.querySelectorAll('.stat-card, .action-card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        card.style.transitionDelay = `${index * 0.1}s`;
+        
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 100);
+    });
+});
+
+// Add hover effects to action cards
+document.querySelectorAll('.action-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - Astronaut Portfolio{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="{{ url_for('projects') }}" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Projects
+        </a>
+    </div>
+
+    <!-- Project Header -->
+    <div class="project-header mb-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold text-gradient mb-3">
+                    {{ project.title }}
+                    {% if project.featured %}
+                    <i class="fas fa-star text-warning ms-2" title="Featured Project"></i>
+                    {% endif %}
+                </h1>
+                <p class="lead text-muted mb-3">{{ project.short_description }}</p>
+                
+                <!-- Project Meta -->
+                <div class="project-meta d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <div class="project-stats">
+                        <button class="btn btn-sm {{ 'btn-primary' if user_liked else 'btn-outline-primary' }} like-btn" 
+                                data-project-id="{{ project.id }}">
+                            <i class="fas fa-heart me-1"></i>
+                            <span class="like-count">{{ project.like_count }}</span>
+                        </button>
+                    </div>
+                    <div class="project-comments">
+                        <span class="badge bg-secondary">
+                            <i class="fas fa-comments me-1"></i>{{ project.comment_count }} Comments
+                        </span>
+                    </div>
+                    <div class="project-date">
+                        <small class="text-muted">
+                            <i class="fas fa-calendar me-1"></i>
+                            {{ project.created_at.strftime('%B %d, %Y') }}
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Project Links -->
+                <div class="project-links mb-3">
+                    {% if project.demo_link %}
+                    <a href="{{ project.demo_link }}" target="_blank" 
+                       class="btn btn-primary me-2">
+                        <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                    </a>
+                    {% endif %}
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" 
+                       class="btn btn-outline-secondary me-2">
+                        <i class="fab fa-github me-2"></i>Source Code
+                    </a>
+                    {% endif %}
+                    <button class="btn btn-outline-info share-linkedin" 
+                            data-project-id="{{ project.id }}"
+                            data-title="{{ project.title }}"
+                            data-description="{{ project.short_description }}">
+                        <i class="fab fa-linkedin me-2"></i>Share on LinkedIn
+                    </button>
+                </div>
+
+                <!-- Project Tags -->
+                {% if project.tag_list %}
+                <div class="project-tags">
+                    {% for tag in project.tag_list %}
+                    <a href="{{ url_for('projects', tag=tag) }}" class="tag-badge">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-4">
+                <div class="project-image-container">
+                    <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
+                         class="img-fluid rounded-3 project-main-image" 
+                         alt="{{ project.title }}"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMUExQTFBIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEyNSIgcj0iNDAiIGZpbGw9IiM0Qzc2RkYiLz4KPHN2Zz4K'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Description -->
+    <div class="project-content mb-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="content-section">
+                    <h2 class="h3 text-primary mb-4">
+                        <i class="fas fa-info-circle me-2"></i>Project Overview
+                    </h2>
+                    <div class="project-description">
+                        {{ project.description | nl2br | safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Project Details Sidebar -->
+                <div class="project-sidebar">
+                    <div class="sidebar-section">
+                        <h4 class="h5 text-primary mb-3">
+                            <i class="fas fa-rocket me-2"></i>Project Details
+                        </h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <strong>Status:</strong> 
+                                <span class="badge bg-success">{{ 'Published' if project.is_published else 'Draft' }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <strong>Created:</strong> 
+                                {{ project.created_at.strftime('%B %Y') }}
+                            </li>
+                            {% if project.updated_at != project.created_at %}
+                            <li class="mb-2">
+                                <strong>Updated:</strong> 
+                                {{ project.updated_at.strftime('%B %Y') }}
+                            </li>
+                            {% endif %}
+                            <li class="mb-2">
+                                <strong>Technologies:</strong> 
+                                {{ project.tag_list | length }} used
+                            </li>
+                        </ul>
+                    </div>
+
+                    {% if project.tag_list %}
+                    <div class="sidebar-section">
+                        <h4 class="h5 text-primary mb-3">
+                            <i class="fas fa-tags me-2"></i>Technologies Used
+                        </h4>
+                        <div class="sidebar-tags">
+                            {% for tag in project.tag_list %}
+                            <span class="sidebar-tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Share Section -->
+                    <div class="sidebar-section">
+                        <h4 class="h5 text-primary mb-3">
+                            <i class="fas fa-share-alt me-2"></i>Share Project
+                        </h4>
+                        <div class="share-buttons d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-sm share-linkedin"
+                                    data-project-id="{{ project.id }}"
+                                    data-title="{{ project.title }}"
+                                    data-description="{{ project.short_description }}">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button class="btn btn-outline-info btn-sm share-twitter">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm copy-link"
+                                    data-url="{{ request.url }}">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h2 class="h3 text-primary mb-4">
+            <i class="fas fa-comments me-2"></i>Comments ({{ project.comment_count }})
+        </h2>
+
+        {% if session.user_id %}
+        <!-- Comment Form -->
+        <div class="comment-form mb-5">
+            <form method="POST" action="{{ url_for('add_comment', project_id=project.id) }}">
+                {{ comment_form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ comment_form.content.label(class="form-label") }}
+                    {{ comment_form.content(class="form-control", rows="4", placeholder="Share your thoughts about this project...") }}
+                    {% for error in comment_form.content.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane me-2"></i>Post Comment
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <!-- Login Prompt -->
+        <div class="login-prompt mb-5">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <a href="{{ url_for('login') }}">Login</a> or 
+                <a href="{{ url_for('register') }}">register</a> to leave a comment.
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Comments List -->
+        {% if comments %}
+        <div class="comments-list">
+            {% for comment in comments %}
+            <div class="comment-item">
+                <div class="comment-header d-flex align-items-center mb-2">
+                    <div class="comment-avatar me-3">
+                        {% if comment.author.profile_image and comment.author.profile_image != 'default-avatar.svg' %}
+                        <img src="{{ url_for('static', filename='uploads/' + comment.author.profile_image) }}" 
+                             alt="{{ comment.author.full_name }}" class="avatar-sm">
+                        {% else %}
+                        <div class="avatar-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="comment-author mb-0">{{ comment.author.full_name }}</h6>
+                        <small class="comment-date text-muted">
+                            {{ comment.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                        </small>
+                    </div>
+                </div>
+                <div class="comment-content">
+                    {{ comment.content | nl2br | safe }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-comments text-center py-4">
+            <div class="empty-icon mb-3">
+                <i class="fas fa-comments"></i>
+            </div>
+            <p class="text-muted mb-0">
+                No comments yet. Be the first to share your thoughts!
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Like button functionality
+document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const projectId = this.dataset.projectId;
+        const likeCount = this.querySelector('.like-count');
+        
+        fetch(`/like/${projectId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Please login to like projects');
+                return;
+            }
+            
+            likeCount.textContent = data.like_count;
+            if (data.liked) {
+                this.classList.remove('btn-outline-primary');
+                this.classList.add('btn-primary');
+            } else {
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-outline-primary');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
+// LinkedIn share functionality
+document.querySelectorAll('.share-linkedin').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const title = this.dataset.title;
+        const description = this.dataset.description;
+        const url = window.location.href;
+        
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}`;
+        
+        window.open(linkedinUrl, '_blank', 'width=600,height=400');
+    });
+});
+
+// Twitter share functionality
+document.querySelectorAll('.share-twitter').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const text = `Check out this amazing project: {{ project.title }}`;
+        const url = window.location.href;
+        
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        
+        window.open(twitterUrl, '_blank', 'width=600,height=400');
+    });
+});
+
+// Copy link functionality
+document.querySelectorAll('.copy-link').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const url = this.dataset.url || window.location.href;
+        
+        navigator.clipboard.writeText(url).then(() => {
+            // Show success feedback
+            const originalIcon = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i>';
+            this.classList.add('btn-success');
+            
+            setTimeout(() => {
+                this.innerHTML = originalIcon;
+                this.classList.remove('btn-success');
+            }, 2000);
+        });
+    });
+});
+
+// Auto-resize textarea
+document.querySelectorAll('textarea').forEach(textarea => {
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+    });
+});
+
+// Smooth scroll to comments when coming from external link
+if (window.location.hash === '#comments') {
+    document.querySelector('.comments-section').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Projects - Astronaut Portfolio{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <div class="page-header text-center mb-5">
+        <h1 class="display-4 fw-bold text-gradient mb-4">
+            <i class="fas fa-satellite me-3"></i>Projects
+        </h1>
+        <p class="lead text-muted">
+            Explore my digital missions across the technology universe
+        </p>
+    </div>
+
+    <!-- Filter Tags -->
+    {% if all_tags %}
+    <div class="filter-section mb-5">
+        <div class="text-center mb-3">
+            <h5 class="text-primary"><i class="fas fa-filter me-2"></i>Filter by Technology</h5>
+        </div>
+        <div class="tag-filters d-flex flex-wrap justify-content-center gap-2">
+            <a href="{{ url_for('projects') }}" 
+               class="filter-tag {{ 'active' if not current_tag else '' }}">
+                All Projects
+            </a>
+            {% for tag in all_tags %}
+            <a href="{{ url_for('projects', tag=tag) }}" 
+               class="filter-tag {{ 'active' if current_tag == tag else '' }}">
+                {{ tag }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+        {% if projects.items %}
+        <div class="row">
+            {% for project in projects.items %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card card h-100">
+                    <div class="card-img-wrapper">
+                        <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
+                             class="card-img-top" alt="{{ project.title }}"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjMUExQTFBIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEyNSIgcj0iNDAiIGZpbGw9IiM0Qzc2RkYiLz4KPHN2Zz4K'">
+                        <div class="card-overlay">
+                            <div class="overlay-content">
+                                <a href="{{ url_for('project_detail', project_id=project.id) }}" 
+                                   class="btn btn-primary">
+                                    <i class="fas fa-eye me-2"></i>View Project
+                                </a>
+                                {% if project.demo_link %}
+                                <a href="{{ project.demo_link }}" target="_blank" 
+                                   class="btn btn-outline-light ms-2">
+                                    <i class="fas fa-external-link-alt me-2"></i>Demo
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            {{ project.title }}
+                            {% if project.featured %}
+                            <i class="fas fa-star text-warning ms-2" title="Featured Project"></i>
+                            {% endif %}
+                        </h5>
+                        <p class="card-text text-muted flex-grow-1">{{ project.short_description }}</p>
+                        
+                        <!-- Project Meta -->
+                        <div class="project-meta">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="project-stats">
+                                    <span class="badge bg-primary me-2">
+                                        <i class="fas fa-heart me-1"></i>{{ project.like_count }}
+                                    </span>
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-comments me-1"></i>{{ project.comment_count }}
+                                    </span>
+                                </div>
+                                <small class="text-muted">
+                                    {{ project.created_at.strftime('%b %Y') }}
+                                </small>
+                            </div>
+                            
+                            <!-- Project Links -->
+                            <div class="project-links mb-2">
+                                {% if project.github_link %}
+                                <a href="{{ project.github_link }}" target="_blank" 
+                                   class="text-muted me-3" title="GitHub Repository">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                {% endif %}
+                                {% if project.demo_link %}
+                                <a href="{{ project.demo_link }}" target="_blank" 
+                                   class="text-muted" title="Live Demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Project Tags -->
+                            {% if project.tag_list %}
+                            <div class="project-tags">
+                                {% for tag in project.tag_list[:4] %}
+                                <span class="tag-badge">{{ tag }}</span>
+                                {% endfor %}
+                                {% if project.tag_list|length > 4 %}
+                                <span class="tag-badge">+{{ project.tag_list|length - 4 }}</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if projects.pages > 1 %}
+        <div class="pagination-wrapper">
+            <nav aria-label="Projects pagination">
+                <ul class="pagination justify-content-center">
+                    {% if projects.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('projects', page=projects.prev_num, tag=current_tag) }}">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for page_num in projects.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                        {% if page_num %}
+                            {% if page_num != projects.page %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('projects', page=page_num, tag=current_tag) }}">
+                                    {{ page_num }}
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_num }}</span>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if projects.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('projects', page=projects.next_num, tag=current_tag) }}">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <!-- Empty State -->
+        <div class="empty-state text-center py-5">
+            <div class="empty-icon mb-4">
+                <i class="fas fa-satellite"></i>
+            </div>
+            <h3 class="text-muted mb-3">No Projects Found</h3>
+            <p class="text-muted mb-4">
+                {% if current_tag %}
+                No projects found with the tag "{{ current_tag }}". Try exploring other technologies.
+                {% else %}
+                The space is empty right now. New projects are being prepared for launch!
+                {% endif %}
+            </p>
+            {% if current_tag %}
+            <a href="{{ url_for('projects') }}" class="btn btn-primary">
+                <i class="fas fa-satellite me-2"></i>View All Projects
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Project Stats -->
+    {% if projects.total > 0 %}
+    <div class="projects-stats mt-5 pt-4 border-top">
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="stat-number">{{ projects.total }}</div>
+                    <div class="stat-label">Total Projects</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-number">
+                        {{ projects.items | selectattr('featured') | list | length }}
+                    </div>
+                    <div class="stat-label">Featured</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="stat-number">{{ all_tags | length }}</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-number">
+                        {{ projects.items | sum(attribute='like_count') }}
+                    </div>
+                    <div class="stat-label">Total Likes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Add loading animation for project cards
+document.querySelectorAll('.project-card').forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    card.style.transitionDelay = `${index * 0.1}s`;
+    
+    setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+    }, 100);
+});
+
+// Filter tag interactions
+document.querySelectorAll('.filter-tag').forEach(tag => {
+    tag.addEventListener('click', function(e) {
+        // Add loading effect
+        const loader = document.createElement('div');
+        loader.className = 'filter-loader';
+        loader.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        this.appendChild(loader);
+    });
+});
+</script>
+{% endblock %}
