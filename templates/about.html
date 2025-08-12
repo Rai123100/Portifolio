@@ -6,66 +6,70 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <!-- Page Header -->
-            <div class="page-header text-center mb-5">
-                <h1 class="display-4 fw-bold text-gradient mb-4">
-                    <i class="fas fa-user-astronaut me-3"></i>About Me
-                </h1>
-                <p class="lead text-muted">
-                    My journey through the digital cosmos
-                </p>
-            </div>
-
-            <!-- About Content -->
-            <div class="about-content">
-                <div class="row align-items-center mb-5">
-                    <div class="col-lg-6 text-center mb-4 mb-lg-0">
-                        <div class="about-hero-image">
-                            <div class="astronaut-character">
-                                <!-- Using SVG for better customization, similar to the design -->
-                                <div class="character-container">
-                                    <img src="{{ url_for('static', filename='images/astronaut-character.svg') }}" 
-                                         alt="Raí Carvalho Astronaut Character" class="character-img">
-                                    <div class="floating-particles">
-                                        <div class="particle particle-1"></div>
-                                        <div class="particle particle-2"></div>
-                                        <div class="particle particle-3"></div>
-                                    </div>
-                                </div>
+            <!-- Hero Section for About Page -->
+            <div class="about-hero-section">
+                <div class="row align-items-center min-vh-75">
+                    <div class="col-lg-6 order-2 order-lg-1">
+                        <div class="about-hero-content">
+                            <div class="greeting-section mb-4">
+                                <span class="greeting-emoji">👋</span>
+                                <h2 class="greeting-text">HELLO WORLD</h2>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="about-content-modern">
-                            <div class="greeting-badge mb-3">
-                                <i class="fas fa-hand-wave me-2"></i>Olá mundo!
-                            </div>
-                            <h1 class="display-5 fw-bold text-white mb-3">
-                                Eu sou <span class="text-gradient">Raí Carvalho</span>
+                            
+                            <h1 class="about-main-title mb-4">
+                                EU SOU O <span class="highlight-text">RAÍ CARVALHO</span><br>
+                                <span class="subtitle-text">DE PERNAMBUCO</span>
                             </h1>
-                            <h2 class="h4 text-primary mb-4">Desenvolvedor de Sistemas</h2>
-                            <div class="about-description">
-                                <p class="text-light mb-3">
-                                    Desenvolvedor full-stack apaixonado por tecnologia e inovação. Como um astronauta 
-                                    explorando o vasto universo digital, estou sempre em busca de novas fronteiras 
-                                    e desafios que me permitam crescer profissionalmente.
+                            
+                            <div class="about-intro mb-5">
+                                <p class="intro-text">
+                                    Desenvolvedor full-stack apaixonado por tecnologia e inovação. 
+                                    Especializado em criar soluções digitais eficientes e criativas 
+                                    que transformam ideias em realidade digital.
                                 </p>
-                                <p class="text-muted mb-4">
-                                    Transformo ideias em código e navego pelo cosmos da programação, explorando 
-                                    diferentes linguagens, frameworks e tecnologias para criar soluções impactantes.
+                                <p class="intro-text">
+                                    Como um astronauta explorando o vasto universo digital, estou sempre em busca 
+                                    de novas fronteiras e desafios que me permitam crescer profissionalmente, 
+                                    navegando pelos cosmos da programação.
                                 </p>
                             </div>
-                            <div class="about-cta">
-                                <a href="mailto:raicarvalho343@gmail.com" class="btn btn-primary me-3">
+                            
+                            <div class="hero-cta-buttons">
+                                <a href="mailto:raicarvalho343@gmail.com" class="btn-contact-main">
                                     <i class="fas fa-envelope me-2"></i>Contato
                                 </a>
-                                <a href="{{ url_for('projects') }}" class="btn btn-outline-light">
+                                <a href="{{ url_for('projects') }}" class="btn-projects-main">
                                     <i class="fas fa-satellite me-2"></i>Meus Projetos
                                 </a>
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="col-lg-6 order-1 order-lg-2">
+                        <div class="about-character-container">
+                            <div class="character-display-wrapper">
+                                <div class="character-main">
+                                    <img src="{{ url_for('static', filename='images/astronaut-character.svg') }}" 
+                                         alt="Raí Carvalho Character" class="main-character-img">
+                                    <div class="character-aura"></div>
+                                </div>
+                                
+                                <!-- Enhanced floating decorations -->
+                                <div class="enhanced-decorations">
+                                    <div class="orbit-circle orbit-1"></div>
+                                    <div class="orbit-circle orbit-2"></div>
+                                    <div class="orbit-circle orbit-3"></div>
+                                    <div class="floating-star star-1"></div>
+                                    <div class="floating-star star-2"></div>
+                                    <div class="floating-star star-3"></div>
+                                    <div class="floating-dot modern-dot-1"></div>
+                                    <div class="floating-dot modern-dot-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
                 <!-- Skills Section -->
                 <div class="skills-section py-5">
