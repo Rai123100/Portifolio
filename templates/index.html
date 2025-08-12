@@ -1,32 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Astronaut Portfolio{% endblock %}
+{% block title %}Início - Portfólio Raí Carvalho{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-0">
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" id="inicio">
         <div class="container">
             <div class="row align-items-center min-vh-100">
                 <div class="col-lg-6">
                     <div class="hero-content">
-                        <h1 class="display-4 fw-bold text-gradient mb-4">
-                            Hello! I'm <span class="text-primary">Raí Carvalho</span>
+                        <span class="hero-greeting text-primary">Olá! 👋</span>
+                        <h1 class="display-4 fw-bold text-gradient mb-3">
+                            Eu sou <span class="text-primary">Raí Carvalho</span>
                         </h1>
                         <h2 class="h3 text-light mb-4">
                             <i class="fas fa-user-astronaut me-2"></i>
-                            Full-Stack Developer & Digital Explorer
+                            <span class="typewriter">Desenvolvedor Full-Stack</span>
                         </h2>
                         <p class="lead text-muted mb-5">
-                            Navigating through the vast universe of technology, creating innovative solutions 
-                            and exploring new digital frontiers. Welcome to my space station!
+                            Transformando ideias em código e navegando pelo vasto universo da tecnologia. 
+                            Especializado em criar soluções inovadoras e explorar novas fronteiras digitais.
                         </p>
                         <div class="hero-buttons">
-                            <a href="{{ url_for('projects') }}" class="btn btn-primary btn-lg me-3">
-                                <i class="fas fa-satellite me-2"></i>Explore Projects
+                            <a href="#projetos" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-satellite me-2"></i>Ver Projetos
                             </a>
-                            <a href="{{ url_for('about') }}" class="btn btn-outline-light btn-lg">
-                                <i class="fas fa-user-astronaut me-2"></i>About Me
+                            <a href="#sobre" class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-user-astronaut me-2"></i>Sobre Mim
+                            </a>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="hero-social mt-4">
+                            <a href="https://github.com/Rai123100" target="_blank" class="social-link me-3">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/rai-carvalho" target="_blank" class="social-link me-3">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="mailto:raicarvalho343@gmail.com" class="social-link me-3">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="#" target="_blank" class="social-link">
+                                <i class="fab fa-instagram"></i>
                             </a>
                         </div>
                     </div>
@@ -34,7 +51,10 @@
                 <div class="col-lg-6">
                     <div class="hero-image">
                         <div class="astronaut-container">
-                            <i class="fas fa-user-astronaut astronaut-icon"></i>
+                            <div class="profile-image-wrapper">
+                                <img src="{{ url_for('static', filename='images/profile-astronaut.svg') }}" 
+                                     alt="Raí Carvalho - Astronauta Developer" class="profile-image">
+                            </div>
                             <div class="floating-elements">
                                 <i class="fas fa-star star-1"></i>
                                 <i class="fas fa-star star-2"></i>
@@ -49,17 +69,75 @@
         </div>
     </section>
 
-    <!-- Featured Projects Section -->
-    {% if featured_projects %}
-    <section class="featured-projects py-5">
+    <!-- Sobre Section -->
+    <section class="about-section py-5" id="sobre">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-5 fw-bold text-gradient mb-4">
+                        <i class="fas fa-user-astronaut me-3"></i>Sobre Mim
+                    </h2>
+                    <p class="lead text-muted mb-5">
+                        Desenvolvedor apaixonado por tecnologia e inovação, com experiência em desenvolvimento web full-stack. 
+                        Sempre em busca de novos desafios e oportunidades para crescer profissionalmente.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Skills Section -->
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center mb-5 text-gradient">Tecnologias & Habilidades</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="fab fa-python skill-icon"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-js-square skill-icon"></i>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-react skill-icon"></i>
+                            <span>React</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-node-js skill-icon"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-database skill-icon"></i>
+                            <span>PostgreSQL</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-git-alt skill-icon"></i>
+                            <span>Git</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-html5 skill-icon"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-css3-alt skill-icon"></i>
+                            <span>CSS3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos Section -->
+    <section class="projects-section py-5 bg-dark-secondary" id="projetos">
         <div class="container">
             <div class="section-header text-center mb-5">
                 <h2 class="display-5 fw-bold text-gradient">
-                    <i class="fas fa-star me-3"></i>Featured Projects
+                    <i class="fas fa-satellite me-3"></i>Meus Projetos
                 </h2>
-                <p class="lead text-muted">Highlighted missions from my digital journey</p>
+                <p class="lead text-muted">Missões destacadas da minha jornada digital</p>
             </div>
-            
+
+            {% if featured_projects %}
             <div class="row">
                 {% for project in featured_projects %}
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -71,7 +149,7 @@
                                 <div class="overlay-content">
                                     <a href="{{ url_for('project_detail', project_id=project.id) }}" 
                                        class="btn btn-primary">
-                                        <i class="fas fa-eye me-2"></i>View Project
+                                        <i class="fas fa-eye me-2"></i>Ver Projeto
                                     </a>
                                 </div>
                             </div>
@@ -101,81 +179,39 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>
-    </section>
-    {% endif %}
-
-    <!-- Recent Projects Section -->
-    {% if recent_projects %}
-    <section class="recent-projects py-5 bg-dark-secondary">
-        <div class="container">
-            <div class="section-header text-center mb-5">
-                <h2 class="display-5 fw-bold text-gradient">
-                    <i class="fas fa-satellite me-3"></i>Recent Missions
-                </h2>
-                <p class="lead text-muted">Latest explorations in the digital cosmos</p>
-            </div>
             
+            {% else %}
             <div class="row">
-                {% for project in recent_projects %}
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="project-card card h-100">
-                        <div class="card-img-wrapper">
-                            <img src="{{ url_for('static', filename='uploads/' + project.image) }}" 
-                                 class="card-img-top" alt="{{ project.title }}">
-                            <div class="card-overlay">
-                                <div class="overlay-content">
-                                    <a href="{{ url_for('project_detail', project_id=project.id) }}" 
-                                       class="btn btn-primary">
-                                        <i class="fas fa-eye me-2"></i>View Project
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ project.title }}</h5>
-                            <p class="card-text text-muted flex-grow-1">{{ project.short_description }}</p>
-                            <div class="project-meta">
-                                <div class="project-stats">
-                                    <span class="badge bg-primary me-2">
-                                        <i class="fas fa-heart me-1"></i>{{ project.like_count }}
-                                    </span>
-                                    <span class="badge bg-secondary">
-                                        <i class="fas fa-comments me-1"></i>{{ project.comment_count }}
-                                    </span>
-                                </div>
-                                {% if project.tag_list %}
-                                <div class="project-tags mt-2">
-                                    {% for tag in project.tag_list[:3] %}
-                                    <span class="tag-badge">{{ tag }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
+                <div class="col-12 text-center">
+                    <div class="no-projects-message">
+                        <i class="fas fa-satellite fa-4x text-muted mb-4"></i>
+                        <h4 class="text-muted">Nenhum projeto em destaque ainda</h4>
+                        <p class="text-muted">Em breve novos projetos serão adicionados ao portfólio!</p>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endif %}
             
+            <!-- View All Projects Button -->
             <div class="text-center mt-5">
                 <a href="{{ url_for('projects') }}" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-satellite me-2"></i>View All Projects
+                    <i class="fas fa-satellite me-2"></i>Ver Todos os Projetos
                 </a>
             </div>
         </div>
     </section>
-    {% endif %}
 
-    <!-- Achievements Section -->
+
+
+    <!-- Conquistas Section -->
     {% if achievements %}
     <section class="achievements py-5">
         <div class="container">
             <div class="section-header text-center mb-5">
                 <h2 class="display-5 fw-bold text-gradient">
-                    <i class="fas fa-trophy me-3"></i>Achievements
+                    <i class="fas fa-trophy me-3"></i>Conquistas
                 </h2>
-                <p class="lead text-muted">Milestones reached in my cosmic journey</p>
+                <p class="lead text-muted">Marcos alcançados na minha jornada cósmica</p>
             </div>
             
             <div class="row">
@@ -201,18 +237,21 @@
     {% endif %}
 
     <!-- Call to Action Section -->
-    <section class="cta-section py-5 bg-gradient-primary">
+    <section class="cta-section py-5 bg-gradient-primary" id="contato">
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-lg-8">
                     <h2 class="display-5 fw-bold text-white mb-4">
-                        Ready to Launch Your Next Project?
+                        Pronto para Lançar Seu Próximo Projeto?
                     </h2>
                     <p class="lead text-white mb-5">
-                        Let's collaborate and create something amazing together in the digital universe!
+                        Vamos colaborar e criar algo incrível juntos no universo digital!
                     </p>
-                    <a href="mailto:raicarvalho343@gmail.com" class="btn btn-light btn-lg">
-                        <i class="fas fa-envelope me-2"></i>Contact Me
+                    <a href="mailto:raicarvalho343@gmail.com" class="btn btn-light btn-lg me-3">
+                        <i class="fas fa-envelope me-2"></i>Entre em Contato
+                    </a>
+                    <a href="https://github.com/Rai123100" target="_blank" class="btn btn-outline-light btn-lg">
+                        <i class="fab fa-github me-2"></i>GitHub
                     </a>
                 </div>
             </div>
@@ -241,6 +280,42 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const floatingElements = document.querySelectorAll('.floating-elements i');
 floatingElements.forEach((element, index) => {
     element.style.animationDelay = `${index * 0.5}s`;
+});
+
+// Typewriter effect for the hero subtitle
+function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
+// Initialize typewriter effect
+document.addEventListener('DOMContentLoaded', function() {
+    const typewriterElement = document.querySelector('.typewriter');
+    if (typewriterElement) {
+        const text = typewriterElement.textContent;
+        setTimeout(() => {
+            typeWriter(typewriterElement, text, 150);
+        }, 1000);
+    }
+});
+
+// Add scroll animations
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const parallax = document.querySelector('.hero-section');
+    if (parallax) {
+        const speed = scrolled * 0.5;
+        parallax.style.transform = `translateY(${speed}px)`;
+    }
 });
 </script>
 {% endblock %}

@@ -1,0 +1,79 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="spaceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="helmetGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="70%" style="stop-color:#3498db;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:0.8" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="200" cy="200" r="190" fill="url(#spaceGrad)" stroke="#3498db" stroke-width="3"/>
+  
+  <!-- Stars in background -->
+  <circle cx="80" cy="80" r="2" fill="#ffffff" opacity="0.8"/>
+  <circle cx="320" cy="100" r="1.5" fill="#ffffff" opacity="0.6"/>
+  <circle cx="90" cy="320" r="1" fill="#ffffff" opacity="0.9"/>
+  <circle cx="300" cy="280" r="1.2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="150" cy="60" r="1" fill="#ffffff" opacity="0.8"/>
+  <circle cx="340" cy="200" r="1" fill="#ffffff" opacity="0.6"/>
+  
+  <!-- Astronaut Body -->
+  <ellipse cx="200" cy="260" rx="50" ry="70" fill="#e8e8e8"/>
+  
+  <!-- Chest Panel -->
+  <rect x="180" y="220" width="40" height="50" rx="8" fill="#2c3e50"/>
+  <rect x="185" y="225" width="8" height="8" rx="2" fill="#e74c3c"/>
+  <rect x="195" y="225" width="8" height="8" rx="2" fill="#f39c12"/>
+  <rect x="205" y="225" width="8" height="8" rx="2" fill="#27ae60"/>
+  
+  <!-- Lines on chest panel -->
+  <line x1="185" y1="240" x2="215" y2="240" stroke="#34495e" stroke-width="1"/>
+  <line x1="185" y1="245" x2="215" y2="245" stroke="#34495e" stroke-width="1"/>
+  <line x1="185" y1="250" x2="215" y2="250" stroke="#34495e" stroke-width="1"/>
+  
+  <!-- Arms -->
+  <ellipse cx="140" cy="230" rx="20" ry="45" fill="#e8e8e8" transform="rotate(-20 140 230)"/>
+  <ellipse cx="260" cy="230" rx="20" ry="45" fill="#e8e8e8" transform="rotate(20 260 230)"/>
+  
+  <!-- Gloves -->
+  <circle cx="125" cy="270" r="18" fill="#2c3e50"/>
+  <circle cx="275" cy="270" r="18" fill="#2c3e50"/>
+  
+  <!-- Helmet -->
+  <circle cx="200" cy="170" r="65" fill="url(#helmetGrad)" stroke="#34495e" stroke-width="4"/>
+  
+  <!-- Helmet Glass Effect -->
+  <circle cx="200" cy="170" r="58" fill="none" stroke="#3498db" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Face (simplified) -->
+  <circle cx="200" cy="170" r="45" fill="#f4c2a1"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="185" cy="160" rx="5" ry="7" fill="#2c3e50"/>
+  <ellipse cx="215" cy="160" rx="5" ry="7" fill="#2c3e50"/>
+  <ellipse cx="186" cy="158" rx="2" ry="3" fill="#ffffff"/>
+  <ellipse cx="216" cy="158" rx="2" ry="3" fill="#ffffff"/>
+  
+  <!-- Nose -->
+  <ellipse cx="200" cy="172" rx="2" ry="4" fill="#e8b89a"/>
+  
+  <!-- Mouth -->
+  <path d="M 192 182 Q 200 188 208 182" stroke="#2c3e50" stroke-width="2" fill="none"/>
+  
+  <!-- Antenna on helmet -->
+  <line x1="200" y1="105" x2="200" y2="85" stroke="#34495e" stroke-width="3"/>
+  <circle cx="200" cy="85" r="4" fill="#e74c3c"/>
+  <circle cx="200" cy="85" r="6" fill="none" stroke="#e74c3c" stroke-width="1" opacity="0.5">
+    <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Reflection on helmet -->
+  <ellipse cx="180" cy="140" rx="15" ry="25" fill="#ffffff" opacity="0.3" transform="rotate(-20 180 140)"/>
+</svg>
