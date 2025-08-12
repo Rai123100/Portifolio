@@ -80,10 +80,13 @@ def create_app():
             db.session.add(admin_user)
             db.session.commit()
     
-    # Add template context processor for current year
+    # Add template context processor for current year and datetime functions
     @app.context_processor
     def inject_current_year():
-        return {'current_year': datetime.now().year}
+        return {
+            'current_year': datetime.now().year,
+            'now': datetime.now
+        }
     
     # Template filters
     @app.template_filter('nl2br')

@@ -95,86 +95,62 @@
                 <div class="col-12">
                     <h3 class="text-center mb-5 text-gradient">Tecnologias & Habilidades</h3>
                     
-                    <!-- Skills Carousel -->
-                    <div id="skillsCarousel" class="carousel slide skills-carousel" data-bs-ride="carousel" data-bs-interval="3000">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="skills-slide">
-                                    <div class="skill-item">
-                                        <i class="fab fa-python skill-icon"></i>
-                                        <span>Python</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-js-square skill-icon"></i>
-                                        <span>JavaScript</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-react skill-icon"></i>
-                                        <span>React</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-node-js skill-icon"></i>
-                                        <span>Node.js</span>
-                                    </div>
+                    <!-- Modern Skills Carousel inspired by the design -->
+                    <div class="skills-carousel-modern">
+                        <div class="skills-container">
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-python"></i>
                                 </div>
+                                <h6>Python</h6>
                             </div>
-                            <div class="carousel-item">
-                                <div class="skills-slide">
-                                    <div class="skill-item">
-                                        <i class="fas fa-database skill-icon"></i>
-                                        <span>PostgreSQL</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-git-alt skill-icon"></i>
-                                        <span>Git</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-html5 skill-icon"></i>
-                                        <span>HTML5</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-css3-alt skill-icon"></i>
-                                        <span>CSS3</span>
-                                    </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-js-square"></i>
                                 </div>
+                                <h6>JavaScript</h6>
                             </div>
-                            <div class="carousel-item">
-                                <div class="skills-slide">
-                                    <div class="skill-item">
-                                        <i class="fab fa-bootstrap skill-icon"></i>
-                                        <span>Bootstrap</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fas fa-flask skill-icon"></i>
-                                        <span>Flask</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fab fa-github skill-icon"></i>
-                                        <span>GitHub</span>
-                                    </div>
-                                    <div class="skill-item">
-                                        <i class="fas fa-code skill-icon"></i>
-                                        <span>Full-Stack</span>
-                                    </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-react"></i>
                                 </div>
+                                <h6>React</h6>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <h6>PostgreSQL</h6>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <h6>Flask</h6>
                             </div>
                         </div>
                         
-                        <!-- Carousel Controls -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#skillsCarousel" data-bs-slide="prev">
+                        <!-- Navigation arrows -->
+                        <button class="skill-nav skill-nav-prev" onclick="scrollSkills('left')">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#skillsCarousel" data-bs-slide="next">
+                        <button class="skill-nav skill-nav-next" onclick="scrollSkills('right')">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                        
-                        <!-- Carousel Indicators -->
-                        <div class="carousel-indicators custom-indicators">
-                            <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="0" class="active"></button>
-                            <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="1"></button>
-                            <button type="button" data-bs-target="#skillsCarousel" data-bs-slide-to="2"></button>
-                        </div>
                     </div>
+                    
+                    <script>
+                    function scrollSkills(direction) {
+                        const container = document.querySelector('.skills-container');
+                        const scrollAmount = 140; // width of skill card + gap
+                        
+                        if (direction === 'left') {
+                            container.scrollLeft -= scrollAmount;
+                        } else {
+                            container.scrollLeft += scrollAmount;
+                        }
+                    }
+                    </script>
                 </div>
             </div>
         </div>

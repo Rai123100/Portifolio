@@ -1,0 +1,51 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Character background -->
+  <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(76, 118, 255, 0.2)" stroke-width="2"/>
+  
+  <!-- Astronaut body -->
+  <ellipse cx="150" cy="180" rx="60" ry="80" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="2"/>
+  
+  <!-- Helmet -->
+  <circle cx="150" cy="120" r="50" fill="rgba(255, 255, 255, 0.9)" stroke="#4c76ff" stroke-width="3"/>
+  <circle cx="150" cy="120" r="45" fill="none" stroke="rgba(76, 118, 255, 0.3)" stroke-width="1"/>
+  
+  <!-- Face -->
+  <circle cx="140" cy="115" r="3" fill="#333"/>
+  <circle cx="160" cy="115" r="3" fill="#333"/>
+  <path d="M 140 125 Q 150 135 160 125" stroke="#333" stroke-width="2" fill="none"/>
+  
+  <!-- Body details -->
+  <circle cx="150" cy="160" r="8" fill="#4c76ff"/>
+  <rect x="135" y="170" width="30" height="4" rx="2" fill="#00d4ff"/>
+  <rect x="135" y="180" width="30" height="4" rx="2" fill="#00d4ff"/>
+  <rect x="135" y="190" width="30" height="4" rx="2" fill="#00d4ff"/>
+  
+  <!-- Arms -->
+  <ellipse cx="90" cy="160" rx="20" ry="35" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="2" transform="rotate(-30 90 160)"/>
+  <ellipse cx="210" cy="160" rx="20" ry="35" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="2" transform="rotate(30 210 160)"/>
+  
+  <!-- Hands -->
+  <circle cx="75" cy="180" r="12" fill="#f4c2a1"/>
+  <circle cx="225" cy="180" r="12" fill="#f4c2a1"/>
+  
+  <!-- Legs -->
+  <ellipse cx="130" cy="240" rx="15" ry="30" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="2"/>
+  <ellipse cx="170" cy="240" rx="15" ry="30" fill="#e8e8e8" stroke="#d0d0d0" stroke-width="2"/>
+  
+  <!-- Boots -->
+  <ellipse cx="130" cy="270" rx="18" ry="12" fill="#4c76ff"/>
+  <ellipse cx="170" cy="270" rx="18" ry="12" fill="#4c76ff"/>
+  
+  <!-- Floating elements -->
+  <circle cx="50" cy="80" r="2" fill="#00d4ff" opacity="0.7"/>
+  <circle cx="250" cy="60" r="3" fill="#4c76ff" opacity="0.8"/>
+  <circle cx="80" cy="250" r="2" fill="#00d4ff" opacity="0.6"/>
+  <circle cx="220" cy="240" r="2" fill="#4c76ff" opacity="0.7"/>
+  
+  <!-- Stars -->
+  <g fill="#00d4ff" opacity="0.8">
+    <polygon points="30,40 32,46 38,46 33,50 35,56 30,52 25,56 27,50 22,46 28,46" />
+    <polygon points="270,30 272,36 278,36 273,40 275,46 270,42 265,46 267,40 262,36 268,36" />
+    <polygon points="40,220 42,226 48,226 43,230 45,236 40,232 35,236 37,230 32,226 38,226" />
+  </g>
+</svg>
