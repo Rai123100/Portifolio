@@ -25,7 +25,7 @@ class ProjectForm(FlaskForm):
                                     validators=[DataRequired(), Length(max=300)])
     description = TextAreaField('Description', validators=[DataRequired()])
     image = FileField('Project Image', 
-                     validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Images only!')])
+                     validators=[Optional(), FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Images only!')])
     demo_link = StringField('Demo Link', validators=[Optional(), URL()])
     github_link = StringField('GitHub Link', validators=[Optional(), URL()])
     tags = StringField('Tags (comma separated)', validators=[Optional()])

@@ -1,0 +1,39 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="spaceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#spaceGrad)"/>
+  
+  <!-- Stars -->
+  <circle cx="50" cy="30" r="1" fill="#ffffff" opacity="0.8"/>
+  <circle cx="150" cy="50" r="1.5" fill="#ffffff" opacity="0.6"/>
+  <circle cx="250" cy="40" r="1" fill="#ffffff" opacity="0.9"/>
+  <circle cx="80" cy="80" r="1" fill="#ffffff" opacity="0.7"/>
+  <circle cx="220" cy="90" r="1.2" fill="#ffffff" opacity="0.8"/>
+  <circle cx="180" cy="160" r="1" fill="#ffffff" opacity="0.6"/>
+  <circle cx="30" cy="150" r="1" fill="#ffffff" opacity="0.9"/>
+  
+  <!-- Rocket Icon -->
+  <g transform="translate(130, 70)">
+    <!-- Rocket Body -->
+    <ellipse cx="20" cy="40" rx="8" ry="30" fill="#e74c3c"/>
+    <!-- Rocket Tip -->
+    <polygon points="20,10 12,40 28,40" fill="#c0392b"/>
+    <!-- Rocket Fins -->
+    <polygon points="12,55 8,70 16,65" fill="#2c3e50"/>
+    <polygon points="28,55 32,70 24,65" fill="#2c3e50"/>
+    <!-- Flame -->
+    <ellipse cx="20" cy="75" rx="6" ry="8" fill="#f39c12" opacity="0.8"/>
+    <ellipse cx="20" cy="80" rx="3" ry="5" fill="#e67e22" opacity="0.9"/>
+  </g>
+  
+  <!-- Project Text -->
+  <text x="150" y="130" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">PROJECT</text>
+  <text x="150" y="150" text-anchor="middle" fill="#3498db" font-family="Arial, sans-serif" font-size="12">Space Explorer</text>
+</svg>

@@ -1,0 +1,82 @@
+Você é um especialista em desenvolvimento web full-stack. Crie um Portfólio Digital Interativo com temática de astronauta usando as referências e códigos base dos seguintes repositórios:
+
+https://github.com/Rai123100/Portfolio.git
+
+https://github.com/Rai123100/Portif-lio_Rai.git
+
+https://github.com/Rai123100/Portifolio_2.git
+
+Objetivo
+Construir um portfólio bonito, moderno, responsivo e interativo, com elementos, cores e ícones inspirados no espaço e astronautas, seguindo um design atraente e bem estruturado, conforme o solicitado na atividade.
+
+Requisitos Técnicos
+Frontend: HTML5, CSS3, Bootstrap 5, JavaScript (pode usar React se preferir).
+
+Backend: Python com Flask (API REST) ou Node.js.
+
+Banco de Dados: PostgreSQL com SQLAlchemy ou MongoDB com PyMongo.
+
+Design Responsivo: compatível com desktop, tablet e mobile.
+
+Estilo Astronauta: cores escuras com detalhes em azul/branco, ilustrações de planetas, foguetes e estrelas, efeitos de partículas no fundo.
+
+Ferramentas extras: SASS, Figma, Google Cloud, AWS.
+
+Controle de versão: Git e GitHub.
+
+Funcionalidades
+Área Pública
+Página inicial com destaque para projetos e conquistas.
+
+Listagem de projetos com imagem, título, descrição, tags e link de visualização.
+
+Página individual para cada projeto.
+
+Botão de curtir com contador.
+
+Campo de comentários (apenas para visitantes logados).
+
+Botão para compartilhar no LinkedIn com prévia personalizada.
+
+Seção "Sobre Mim" com o texto fornecido pelo proprietário (exatamente como foi escrito).
+
+Animações e efeitos de scroll.
+
+Área de Autenticação
+Cadastro de visitantes (nome, e-mail, senha, foto).
+
+Login com JWT.
+
+Recuperação de senha por e-mail.
+
+Upload de foto de perfil.
+
+Área Administrativa (somente proprietário)
+Login exclusivo:
+
+Usuário: Raí123100
+
+E-mail: raicarvalho343@gmail.com
+
+Senha: rai123100
+
+Cadastrar, editar e excluir projetos e conquistas.
+
+Upload de imagens, vídeos ou links de demonstração.
+
+Organização por categorias/tags.
+
+Opção para publicar ou salvar como rascunho.
+
+Notificação ao proprietário quando receber um comentário.
+
+Extras
+Animações suaves em transições de páginas.
+
+Fundo interativo com estrelas ou partículas simulando o espaço.
+
+Ícones e imagens relacionadas a astronautas e exploração espacial.
+
+Documentação no código indicando partes feitas pela IA e partes manuais.
+
+Seguir boas práticas de acessibilidade.

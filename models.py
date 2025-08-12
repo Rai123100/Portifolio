@@ -31,7 +31,7 @@ class Project(db.Model):
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
     short_description = db.Column(db.String(300), nullable=False)
-    image = db.Column(db.String(200), nullable=False)
+    image = db.Column(db.String(200), default='images/default-project.svg')
     demo_link = db.Column(db.String(500))
     github_link = db.Column(db.String(500))
     tags = db.Column(db.String(500))  # Comma separated tags
