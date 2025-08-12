@@ -85,6 +85,14 @@ def create_app():
     def inject_current_year():
         return {'current_year': datetime.now().year}
     
+    # Template filters
+    @app.template_filter('nl2br')
+    def nl2br_filter(text):
+        """Convert newlines to <br> tags"""
+        if text is None:
+            return ''
+        return text.replace('\n', '<br>\n')
+    
     # Register routes
     from routes import register_routes
     register_routes(app)

@@ -1088,24 +1088,31 @@ body {
     animation: float 6s ease-in-out infinite;
 }
 
-/* Skills Grid */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+/* Skills Carousel */
+.skills-carousel {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.skills-slide {
+    display: flex;
+    justify-content: center;
     gap: 2rem;
-    margin-top: 2rem;
+    padding: 2rem 0;
 }
 
 .skill-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
     background: rgba(26, 26, 26, 0.8);
     border-radius: 15px;
     border: 1px solid rgba(76, 118, 255, 0.2);
     transition: all var(--transition-normal);
     text-align: center;
+    min-width: 150px;
+    flex: 1;
 }
 
 .skill-item:hover {
@@ -1113,6 +1120,69 @@ body {
     background: rgba(76, 118, 255, 0.1);
     border-color: var(--primary-color);
     box-shadow: var(--glow-primary);
+}
+
+/* Carousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 60px;
+    height: 60px;
+    background: rgba(76, 118, 255, 0.2);
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: all var(--transition-normal);
+}
+
+.carousel-control-prev {
+    left: -80px;
+}
+
+.carousel-control-next {
+    right: -80px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background: var(--primary-color);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-control-prev i,
+.carousel-control-next i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.carousel-control-prev:hover i,
+.carousel-control-next:hover i {
+    color: white;
+}
+
+/* Custom Carousel Indicators */
+.custom-indicators {
+    position: static;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.custom-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(76, 118, 255, 0.3);
+    border: 2px solid var(--primary-color);
+    transition: all var(--transition-normal);
+}
+
+.custom-indicators button.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
 }
 
 .skill-icon {
@@ -1169,3 +1239,109 @@ body {
 .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
 .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
 .hero-content > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Contact Section Improvements */
+.cta-section {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%234c76ff" opacity="0.3"/><circle cx="80" cy="40" r="0.5" fill="%2300d4ff" opacity="0.5"/><circle cx="40" cy="80" r="1.5" fill="%234c76ff" opacity="0.2"/></svg>');
+    opacity: 0.3;
+}
+
+.contact-methods {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-card {
+    display: block;
+    padding: 2rem 1.5rem;
+    background: rgba(26, 26, 26, 0.6);
+    border-radius: 15px;
+    border: 1px solid rgba(76, 118, 255, 0.2);
+    text-decoration: none;
+    color: var(--text-light);
+    transition: all var(--transition-normal);
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    background: rgba(76, 118, 255, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: var(--glow-primary);
+    color: var(--text-light);
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    transition: all var(--transition-normal);
+}
+
+.contact-card:hover .contact-icon {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.contact-card h5 {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.contact-card:hover h5,
+.contact-card:hover p {
+    color: var(--text-light);
+}
+
+.cta-buttons {
+    position: relative;
+    z-index: 2;
+}
+
+/* Responsive Improvements for Skills Carousel */
+@media (max-width: 768px) {
+    .skills-slide {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .skill-item {
+        min-width: 120px;
+        padding: 1.5rem 1rem;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        display: none;
+    }
+    
+    .contact-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .contact-icon {
+        font-size: 2rem;
+    }
+}

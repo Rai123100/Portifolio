@@ -297,7 +297,7 @@ def register_routes(app):
             project.featured = form.featured.data
             
             # Handle image upload
-            if form.image.data:
+            if form.image.data and hasattr(form.image.data, 'filename'):
                 file = form.image.data
                 if allowed_file(file.filename):
                     filename = str(uuid.uuid4()) + '.' + file.filename.rsplit('.', 1)[1].lower()
