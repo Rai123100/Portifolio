@@ -3927,7 +3927,11 @@ body {
 }
 
 .contact-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     padding: 2rem 1.5rem;
     background: rgba(26, 26, 26, 0.6);
     border-radius: 15px;
