@@ -3267,36 +3267,33 @@ body {
 .profile-main-image {
     position: relative;
     z-index: 2;
-    width: 320px;
-    height: 320px;
+    width: 350px;
+    height: 350px;
     border-radius: 50%;
-    border: 6px solid var(--primary-color);
+    border: 8px solid #ff6b35;
     box-shadow: 
-        0 0 40px rgba(76, 118, 255, 0.6),
-        0 0 80px rgba(76, 118, 255, 0.4),
-        inset 0 0 20px rgba(76, 118, 255, 0.1);
+        0 0 60px rgba(255, 107, 53, 0.8),
+        0 0 120px rgba(255, 107, 53, 0.4);
     animation: profileImageFloat 6s ease-in-out infinite;
     object-fit: cover;
     transition: all 0.3s ease;
-    filter: brightness(1.1) contrast(1.05) saturate(1.1);
+    filter: brightness(1.1) contrast(1.1) saturate(1.2);
 }
 
 @keyframes profileImageFloat {
     0%, 100% { 
         transform: translateY(0px) scale(1);
-        filter: brightness(1.1) contrast(1.05) saturate(1.1);
+        filter: brightness(1.1) contrast(1.1) saturate(1.2);
         box-shadow: 
-            0 0 40px rgba(76, 118, 255, 0.6),
-            0 0 80px rgba(76, 118, 255, 0.4),
-            inset 0 0 20px rgba(76, 118, 255, 0.1);
+            0 0 60px rgba(255, 107, 53, 0.8),
+            0 0 120px rgba(255, 107, 53, 0.4);
     }
     50% { 
-        transform: translateY(-20px) scale(1.03);
-        filter: brightness(1.15) contrast(1.08) saturate(1.15);
+        transform: translateY(-15px) scale(1.02);
+        filter: brightness(1.15) contrast(1.15) saturate(1.25);
         box-shadow: 
-            0 0 50px rgba(76, 118, 255, 0.8),
-            0 0 100px rgba(76, 118, 255, 0.5),
-            inset 0 0 30px rgba(76, 118, 255, 0.15);
+            0 0 80px rgba(255, 107, 53, 1),
+            0 0 150px rgba(255, 107, 53, 0.6);
     }
 }
 
@@ -3305,37 +3302,52 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(76, 118, 255, 0.3) 0%, rgba(76, 118, 255, 0.1) 50%, transparent 80%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.6) 0%, rgba(255, 107, 53, 0.3) 30%, rgba(255, 69, 0, 0.2) 60%, transparent 80%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
-    animation: primaryGlow 6s ease-in-out infinite;
+    animation: primaryGlow 8s ease-in-out infinite;
 }
 
 .profile-glow-secondary {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(0, 212, 255, 0.25) 0%, rgba(0, 212, 255, 0.1) 40%, transparent 70%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.4) 0%, rgba(255, 69, 0, 0.2) 40%, rgba(220, 20, 60, 0.15) 70%, transparent 90%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: -2;
-    animation: secondaryGlow 8s ease-in-out infinite;
+    animation: secondaryGlow 10s ease-in-out infinite;
 }
 
 @keyframes primaryGlow {
-    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-    50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05) rotate(180deg); }
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1.1); 
+    }
 }
 
 @keyframes secondaryGlow {
-    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-    33% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.08) rotate(120deg); }
-    66% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.12) rotate(240deg); }
+    0%, 100% { 
+        opacity: 0.6; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+    33% { 
+        opacity: 0.9; 
+        transform: translate(-50%, -50%) scale(1.15); 
+    }
+    66% { 
+        opacity: 0.7; 
+        transform: translate(-50%, -50%) scale(1.2); 
+    }
 }
 
 /* About Page Modern Layout Improvements */
@@ -3353,8 +3365,9 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    min-height: 450px;
+    min-height: 500px;
     padding: 2rem 1rem;
+    background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.1) 0%, rgba(255, 69, 0, 0.05) 50%, transparent 80%);
 }
 
 .profile-image-wrapper {
@@ -3482,19 +3495,24 @@ body {
     }
     
     .profile-main-image {
-        width: 250px;
-        height: 250px;
-        border: 4px solid var(--primary-color);
+        width: 280px;
+        height: 280px;
+        border: 6px solid #ff6b35;
     }
     
     .profile-glow {
-        width: 320px;
-        height: 320px;
+        width: 400px;
+        height: 400px;
     }
     
     .profile-glow-secondary {
-        width: 380px;
-        height: 380px;
+        width: 480px;
+        height: 480px;
+    }
+    
+    .profile-image-container {
+        min-height: 400px;
+        padding: 1.5rem;
     }
     
     .ring-1 {
