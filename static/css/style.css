@@ -574,10 +574,10 @@ body {
     align-items: center;
     justify-content: center;
     height: 200px;
-    overflow: visible; /* Allow arrows to show */
-    padding: 0 20px; /* Reduced padding */
+    overflow: visible;
+    padding: 0;
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 1000px;
 }
 
 .skills-track {
@@ -589,8 +589,9 @@ body {
     will-change: transform;
     min-width: 100%;
     flex-wrap: nowrap;
-    overflow: hidden; /* Skills contained within track */
-    padding: 0 70px; /* Space for arrows inside the container */
+    overflow: hidden;
+    padding: 0 80px; /* Space for arrows */
+    box-sizing: border-box;
 }
 
 .skill-card {
@@ -694,39 +695,47 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(26, 26, 26, 0.9);
-    border: 2px solid rgba(76, 118, 255, 0.4);
+    background: rgba(26, 26, 26, 0.95);
+    border: 2px solid rgba(76, 118, 255, 0.6);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
+    width: 55px;
+    height: 55px;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     color: var(--primary-color);
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(15px);
-    z-index: 100; /* Higher z-index to ensure visibility */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    opacity: 1; /* Ensure they're visible */
+    z-index: 200;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    opacity: 1;
+    visibility: visible;
 }
 
 .prev-control {
-    left: 20px; /* Inside container with padding space */
+    left: 15px;
+    z-index: 200;
 }
 
 .next-control {
-    right: 20px; /* Inside container with padding space */
+    right: 15px;
+    z-index: 200;
 }
 
 .carousel-control:hover {
     background: var(--primary-color);
     color: white;
-    transform: translateY(-50%) scale(1.15);
+    transform: translateY(-50%) scale(1.1);
     border-color: var(--accent-color);
     box-shadow: 
-        0 8px 30px rgba(76, 118, 255, 0.5),
-        0 0 20px rgba(0, 212, 255, 0.3);
+        0 8px 30px rgba(76, 118, 255, 0.6),
+        0 0 25px rgba(0, 212, 255, 0.4);
+}
+
+.carousel-control i {
+    font-size: 1.2rem;
+    pointer-events: none;
 }
 
 /* Removed carousel indicators styles since indicators were removed */
