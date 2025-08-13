@@ -35,8 +35,8 @@
                             </div>
                             
                             <div class="hero-cta-buttons">
-                                <a href="mailto:raicarvalho343@gmail.com" class="btn-contact-main">
-                                    <i class="fas fa-envelope me-2"></i>Contato
+                                <a href="#" class="btn-contact-main" onclick="downloadCV()">
+                                    <i class="fas fa-download me-2"></i>Currículo
                                 </a>
                                 <a href="{{ url_for('projects') }}" class="btn-projects-main">
                                     <i class="fas fa-satellite me-2"></i>Meus Projetos
@@ -235,6 +235,17 @@
 
 {% block scripts %}
 <script>
+// CV Download Function
+function downloadCV() {
+    // Create a temporary download link
+    const link = document.createElement('a');
+    link.href = '#'; // Replace with actual CV file path when available
+    link.download = 'Rai_Carvalho_CV.pdf';
+    
+    // For now, show a message to the user
+    alert('Currículo será disponibilizado em breve! Entre em contato para solicitar: raicarvalho343@gmail.com');
+}
+
 // Animate timeline items on scroll
 const observerOptions = {
     root: null,

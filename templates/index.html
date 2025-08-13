@@ -127,14 +127,7 @@
                 </button>
             </div>
             
-            <!-- Carousel indicators -->
-            <div class="carousel-indicators">
-                <span class="indicator" data-slide="0"></span>
-                <span class="indicator active" data-slide="1"></span>
-                <span class="indicator" data-slide="2"></span>
-                <span class="indicator" data-slide="3"></span>
-                <span class="indicator" data-slide="4"></span>
-            </div>
+
         </div>
     </section>
 
@@ -171,7 +164,6 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const skillCards = document.querySelectorAll('.skill-card');
-        const indicators = document.querySelectorAll('.indicator');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const skillsTrack = document.getElementById('skillsTrack');
@@ -180,16 +172,12 @@
         let autoRotateInterval;
         
         function updateCarousel(index) {
-            // Remove active class from all cards and indicators
+            // Remove active class from all cards
             skillCards.forEach(card => card.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
             
-            // Add active class to current items
+            // Add active class to current card
             if (skillCards[index]) {
                 skillCards[index].classList.add('active');
-            }
-            if (indicators[index]) {
-                indicators[index].classList.add('active');
             }
             
             // Smooth track movement - center the active card
@@ -241,14 +229,7 @@
             });
         }
         
-        // Indicator clicks
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                stopAutoRotate();
-                updateCarousel(index);
-                setTimeout(startAutoRotate, 6000);
-            });
-        });
+        // Remove indicator event listeners since we removed them
         
         // Card clicks
         skillCards.forEach((card, index) => {
