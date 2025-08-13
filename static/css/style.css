@@ -453,6 +453,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    animation: universeRotation 25s linear infinite;
 }
 
 .orbit-ring-hero {
@@ -462,7 +463,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: rotateOrbitHero 20s linear infinite;
+    animation: rotateOrbitHero 15s linear infinite;
+    box-shadow: 0 0 20px rgba(76, 118, 255, 0.3);
 }
 
 .orbit-1 {
@@ -3263,7 +3265,7 @@ body {
     50% { opacity: 0.8; }
 }
 
-/* Enhanced Profile Image */
+/* Enhanced Profile Image with Universe Shadow */
 .profile-main-image {
     position: relative;
     z-index: 2;
@@ -3272,31 +3274,56 @@ body {
     border-radius: 50%;
     border: 3px solid rgba(255, 255, 255, 0.1);
     box-shadow: 
+        0 0 0 8px rgba(255, 107, 53, 0.1),
+        0 0 0 16px rgba(76, 118, 255, 0.08),
+        0 0 0 24px rgba(0, 212, 255, 0.06),
+        0 0 0 32px rgba(147, 51, 234, 0.04),
         0 8px 32px rgba(0, 0, 0, 0.4),
         0 4px 16px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(255, 107, 53, 0.2);
-    animation: profileImageFloat 8s ease-in-out infinite;
+        0 0 40px rgba(255, 107, 53, 0.3),
+        0 0 80px rgba(76, 118, 255, 0.2),
+        0 0 120px rgba(0, 212, 255, 0.1);
+    animation: profileImageFloat 8s ease-in-out infinite, universeGlow 6s ease-in-out infinite alternate;
     object-fit: cover;
     transition: all 0.3s ease;
-    filter: brightness(1.05) contrast(1.1) saturate(1.1);
+    filter: brightness(1.05) contrast(1.1) saturate(1.1) drop-shadow(0 0 10px rgba(255, 107, 53, 0.4));
 }
 
 @keyframes profileImageFloat {
     0%, 100% { 
-        transform: translateY(0px) scale(1);
-        filter: brightness(1.05) contrast(1.1) saturate(1.1);
-        box-shadow: 
-            0 8px 32px rgba(0, 0, 0, 0.4),
-            0 4px 16px rgba(0, 0, 0, 0.3),
-            0 0 20px rgba(255, 107, 53, 0.2);
+        transform: translateY(0px) scale(1) rotate(0deg);
+        filter: brightness(1.05) contrast(1.1) saturate(1.1) drop-shadow(0 0 10px rgba(255, 107, 53, 0.4));
     }
     50% { 
-        transform: translateY(-8px) scale(1.01);
-        filter: brightness(1.08) contrast(1.12) saturate(1.15);
+        transform: translateY(-8px) scale(1.01) rotate(1deg);
+        filter: brightness(1.08) contrast(1.12) saturate(1.15) drop-shadow(0 0 15px rgba(255, 107, 53, 0.6));
+    }
+}
+
+@keyframes universeGlow {
+    0% {
         box-shadow: 
-            0 12px 40px rgba(0, 0, 0, 0.5),
-            0 6px 20px rgba(0, 0, 0, 0.4),
-            0 0 25px rgba(255, 107, 53, 0.3);
+            0 0 0 8px rgba(255, 107, 53, 0.1),
+            0 0 0 16px rgba(76, 118, 255, 0.08),
+            0 0 0 24px rgba(0, 212, 255, 0.06),
+            0 0 0 32px rgba(147, 51, 234, 0.04),
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 0 40px rgba(255, 107, 53, 0.3),
+            0 0 80px rgba(76, 118, 255, 0.2),
+            0 0 120px rgba(0, 212, 255, 0.1);
+    }
+    100% {
+        box-shadow: 
+            0 0 0 8px rgba(255, 107, 53, 0.15),
+            0 0 0 16px rgba(76, 118, 255, 0.12),
+            0 0 0 24px rgba(0, 212, 255, 0.1),
+            0 0 0 32px rgba(147, 51, 234, 0.08),
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 0 60px rgba(255, 107, 53, 0.4),
+            0 0 120px rgba(76, 118, 255, 0.3),
+            0 0 180px rgba(0, 212, 255, 0.15);
     }
 }
 
@@ -3376,13 +3403,14 @@ body {
     align-items: center;
 }
 
-/* Enhanced Orbital Decorations */
+/* Enhanced Orbital Decorations with Universe Rotation */
 .orbital-decorations {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+    animation: universeRotation 30s linear infinite;
 }
 
 .orbital-ring {
@@ -3471,6 +3499,11 @@ body {
 @keyframes starTwinkle {
     0%, 100% { opacity: 0.6; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes universeRotation {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Responsive Design for Tech Elements */
