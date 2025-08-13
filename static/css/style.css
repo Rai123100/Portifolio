@@ -574,8 +574,9 @@ body {
     align-items: center;
     justify-content: center;
     height: 200px;
-    overflow: visible;
-    padding: 0 70px;
+    overflow: hidden; /* Skills remain contained */
+    padding: 0 20px; /* Reduced padding */
+    margin: 0 70px; /* Added margin for arrow space */
     margin: 0 auto;
     max-width: 1000px;
 }
@@ -709,11 +710,11 @@ body {
 }
 
 .prev-control {
-    left: 10px;
+    left: -60px; /* Moved outside container */
 }
 
 .next-control {
-    right: 10px;
+    right: -60px; /* Moved outside container */
 }
 
 .carousel-control:hover {
@@ -3153,6 +3154,8 @@ body {
 .skills-carousel {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    overflow: visible; /* Allow arrows to show outside */
 }
 
 .skills-slide {
@@ -3160,6 +3163,7 @@ body {
     justify-content: center;
     gap: 2rem;
     padding: 2rem 0;
+    overflow: hidden; /* Skills stay contained */
 }
 
 .skill-item {
@@ -3393,9 +3397,15 @@ body {
         margin: 0 auto;
     }
     
+    .skills-carousel-modern {
+        margin: 0 20px; /* Reduced margin on mobile */
+    }
+    
     .carousel-control-prev,
-    .carousel-control-next {
-        display: none;
+    .carousel-control-next,
+    .prev-control,
+    .next-control {
+        display: none; /* Hide arrows on mobile */
     }
     
     .contact-card {
