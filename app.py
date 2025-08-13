@@ -23,8 +23,8 @@ def create_app():
     app = Flask(__name__)
     
     # Configuration
-    app.secret_key = os.environ.get("SESSION_SECRET", "astronaut-portfolio-secret-key")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "postgresql://user:password@localhost/portfolio")
+    app.secret_key = os.environ.get("SESSION_SECRET")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_recycle": 300,
         "pool_pre_ping": True,
@@ -70,13 +70,12 @@ def create_app():
         
         admin_user = User.query.filter_by(username="Raí123100").first()
         if not admin_user:
-            admin_user = User(
-                username="Raí123100",
-                email="raicarvalho343@gmail.com",
-                password_hash=generate_password_hash("rai123100"),
-                is_admin=True,
-                full_name="Raí Carvalho"
-            )
+            admin_user = User()
+            admin_user.username = "Raí123100"
+            admin_user.email = "raicarvalho343@gmail.com"
+            admin_user.password_hash = generate_password_hash("rai123100")
+            admin_user.is_admin = True
+            admin_user.full_name = "Raí Carvalho"
             db.session.add(admin_user)
             db.session.commit()
     
@@ -101,5 +100,3 @@ def create_app():
     register_routes(app)
     
     return app
-
-app = create_app()
