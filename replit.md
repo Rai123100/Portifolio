@@ -7,6 +7,8 @@ An interactive full-stack portfolio web application with a space/astronaut theme
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Language: Portuguese (all content should be in Portuguese)
+Tools/Technologies to highlight: HTML5, CSS3, JavaScript, Google Cloud, AWS, Node.js, Git, GitHub, Canva, Figma, Sass, Microsoft SQL Server, Python
 
 ## System Architecture
 

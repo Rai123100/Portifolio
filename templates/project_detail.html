@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ project.title }} - Astronaut Portfolio{% endblock %}
+{% block title %}{{ project.title }} - Portfólio Astronauta{% endblock %}
 
 {% block content %}
 <div class="container">
     <!-- Back Button -->
     <div class="mb-4">
         <a href="{{ url_for('projects') }}" class="btn btn-outline-primary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Projects
+            <i class="fas fa-arrow-left me-2"></i>Voltar aos Projetos
         </a>
     </div>
 
@@ -34,7 +34,7 @@
                     </div>
                     <div class="project-comments">
                         <span class="badge bg-secondary">
-                            <i class="fas fa-comments me-1"></i>{{ project.comment_count }} Comments
+                            <i class="fas fa-comments me-1"></i>{{ project.comment_count }} Comentários
                         </span>
                     </div>
                     <div class="project-date">
@@ -50,20 +50,20 @@
                     {% if project.demo_link %}
                     <a href="{{ project.demo_link }}" target="_blank" 
                        class="btn btn-primary me-2">
-                        <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                        <i class="fas fa-external-link-alt me-2"></i>Demo ao Vivo
                     </a>
                     {% endif %}
                     {% if project.github_link %}
                     <a href="{{ project.github_link }}" target="_blank" 
                        class="btn btn-outline-secondary me-2">
-                        <i class="fab fa-github me-2"></i>Source Code
+                        <i class="fab fa-github me-2"></i>Código Fonte
                     </a>
                     {% endif %}
                     <button class="btn btn-outline-info share-linkedin" 
                             data-project-id="{{ project.id }}"
                             data-title="{{ project.title }}"
                             data-description="{{ project.short_description }}">
-                        <i class="fab fa-linkedin me-2"></i>Share on LinkedIn
+                        <i class="fab fa-linkedin me-2"></i>Compartilhar no LinkedIn
                     </button>
                 </div>
 

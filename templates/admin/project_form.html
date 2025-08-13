@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ 'Edit Project' if project else 'New Project' }} - Admin Dashboard{% endblock %}
+{% block title %}{{ 'Editar Projeto' if project else 'Novo Projeto' }} - Painel Admin{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -19,21 +19,21 @@
                             <a href="{{ url_for('admin_projects') }}">Projects</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            {{ 'Edit Project' if project else 'New Project' }}
+                            {{ 'Editar Projeto' if project else 'Novo Projeto' }}
                         </li>
                     </ol>
                 </nav>
                 <h1 class="display-6 fw-bold text-gradient mb-2">
                     <i class="fas fa-{{ 'edit' if project else 'plus' }} me-2"></i>
-                    {{ 'Edit Project' if project else 'New Project' }}
+                    {{ 'Editar Projeto' if project else 'Novo Projeto' }}
                 </h1>
                 <p class="text-muted">
-                    {{ 'Update your mission details' if project else 'Create a new mission for your portfolio' }}
+                    {{ 'Atualize os detalhes da sua missão' if project else 'Crie uma nova missão para seu portfólio' }}
                 </p>
             </div>
             <div class="col-md-4 text-md-end">
                 <a href="{{ url_for('admin_projects') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i>Back to Projects
+                    <i class="fas fa-arrow-left me-2"></i>Voltar aos Projetos
                 </a>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="project-form-card card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-rocket me-2"></i>Project Details
+                        <i class="fas fa-rocket me-2"></i>Detalhes do Projeto
                     </h5>
                 </div>
                 <div class="card-body">

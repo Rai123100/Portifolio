@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Projects - Astronaut Portfolio{% endblock %}
+{% block title %}Projetos - Portfólio Astronauta{% endblock %}
 
 {% block content %}
 <div class="container">
     <!-- Page Header -->
     <div class="page-header text-center mb-5">
         <h1 class="display-4 fw-bold text-gradient mb-4">
-            <i class="fas fa-satellite me-3"></i>Projects
+            <i class="fas fa-satellite me-3"></i>Projetos
         </h1>
         <p class="lead text-muted">
-            Explore my digital missions across the technology universe
+            Explore minhas missões digitais pelo universo da tecnologia
         </p>
     </div>
 
@@ -18,12 +18,12 @@
     {% if all_tags %}
     <div class="filter-section mb-5">
         <div class="text-center mb-3">
-            <h5 class="text-primary"><i class="fas fa-filter me-2"></i>Filter by Technology</h5>
+            <h5 class="text-primary"><i class="fas fa-filter me-2"></i>Filtrar por Tecnologia</h5>
         </div>
         <div class="tag-filters d-flex flex-wrap justify-content-center gap-2">
             <a href="{{ url_for('projects') }}" 
                class="filter-tag {{ 'active' if not current_tag else '' }}">
-                All Projects
+                Todos os Projetos
             </a>
             {% for tag in all_tags %}
             <a href="{{ url_for('projects', tag=tag) }}" 
@@ -50,7 +50,7 @@
                             <div class="overlay-content">
                                 <a href="{{ url_for('project_detail', project_id=project.id) }}" 
                                    class="btn btn-primary">
-                                    <i class="fas fa-eye me-2"></i>View Project
+                                    <i class="fas fa-eye me-2"></i>Ver Projeto
                                 </a>
                                 {% if project.demo_link %}
                                 <a href="{{ project.demo_link }}" target="_blank" 

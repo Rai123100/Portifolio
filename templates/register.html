@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Register - Astronaut Portfolio{% endblock %}
+{% block title %}Cadastrar - Portfólio Astronauta{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -11,8 +11,8 @@
                     <div class="auth-icon mb-3">
                         <i class="fas fa-user-astronaut"></i>
                     </div>
-                    <h2 class="h3 text-gradient mb-2">Join the Space Crew!</h2>
-                    <p class="text-muted">Create your account to start exploring</p>
+                    <h2 class="h3 text-gradient mb-2">Junte-se à Tripulação Espacial!</h2>
+                    <p class="text-muted">Crie sua conta para começar a explorar</p>
                 </div>
 
                 <form method="POST" enctype="multipart/form-data" novalidate>
@@ -31,7 +31,7 @@
                                 {% for error in form.username.errors %}
                                 <div class="invalid-feedback">{{ error }}</div>
                                 {% endfor %}
-                                <div class="form-text">Choose a unique username (3-20 characters)</div>
+                                <div class="form-text">Escolha um nome de usuário único (3-20 caracteres)</div>
                             </div>
                         </div>
                         <div class="col-md-6">

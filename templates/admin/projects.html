@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Manage Projects - Admin Dashboard{% endblock %}
+{% block title %}Gerenciar Projetos - Painel Admin{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -19,13 +19,13 @@
                     </ol>
                 </nav>
                 <h1 class="display-6 fw-bold text-gradient mb-2">
-                    <i class="fas fa-satellite me-2"></i>Project Management
+                    <i class="fas fa-satellite me-2"></i>Gerenciamento de Projetos
                 </h1>
-                <p class="text-muted">Manage your portfolio missions</p>
+                <p class="text-muted">Gerencie suas missões do portfólio</p>
             </div>
             <div class="col-md-4 text-md-end">
                 <a href="{{ url_for('admin_project_form') }}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus me-2"></i>New Project
+                    <i class="fas fa-plus me-2"></i>Novo Projeto
                 </a>
             </div>
         </div>
@@ -35,21 +35,21 @@
     <div class="projects-table-card card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">
-                <i class="fas fa-rocket me-2"></i>All Projects
+                <i class="fas fa-rocket me-2"></i>Todos os Projetos
             </h5>
             <div class="table-actions">
                 <div class="btn-group btn-group-sm" role="group">
                     <input type="radio" class="btn-check" name="filter" id="all" checked>
-                    <label class="btn btn-outline-secondary" for="all">All</label>
+                    <label class="btn btn-outline-secondary" for="all">Todos</label>
                     
                     <input type="radio" class="btn-check" name="filter" id="published">
-                    <label class="btn btn-outline-secondary" for="published">Published</label>
+                    <label class="btn btn-outline-secondary" for="published">Publicados</label>
                     
                     <input type="radio" class="btn-check" name="filter" id="draft">
-                    <label class="btn btn-outline-secondary" for="draft">Draft</label>
+                    <label class="btn btn-outline-secondary" for="draft">Rascunho</label>
                     
                     <input type="radio" class="btn-check" name="filter" id="featured">
-                    <label class="btn btn-outline-secondary" for="featured">Featured</label>
+                    <label class="btn btn-outline-secondary" for="featured">Destaque</label>
                 </div>
             </div>
         </div>
@@ -59,13 +59,13 @@
                 <table class="table table-hover mb-0">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col" style="width: 60px;">Image</th>
-                            <th scope="col">Title</th>
+                            <th scope="col" style="width: 60px;">Imagem</th>
+                            <th scope="col">Título</th>
                             <th scope="col" style="width: 100px;">Status</th>
-                            <th scope="col" style="width: 80px;">Likes</th>
-                            <th scope="col" style="width: 100px;">Comments</th>
-                            <th scope="col" style="width: 120px;">Created</th>
-                            <th scope="col" style="width: 140px;">Actions</th>
+                            <th scope="col" style="width: 80px;">Curtidas</th>
+                            <th scope="col" style="width: 100px;">Comentários</th>
+                            <th scope="col" style="width: 120px;">Criado</th>
+                            <th scope="col" style="width: 140px;">Ações</th>
                         </tr>
                     </thead>
                     <tbody>

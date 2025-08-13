@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Dashboard - Astronaut Portfolio{% endblock %}
+{% block title %}Painel Admin - Portfólio Astronauta{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,15 +9,15 @@
         <div class="row align-items-center">
             <div class="col-md-8">
                 <h1 class="display-5 fw-bold text-gradient mb-3">
-                    <i class="fas fa-cog me-3"></i>Mission Control Center
+                    <i class="fas fa-cog me-3"></i>Centro de Controle da Missão
                 </h1>
                 <p class="lead text-muted">
-                    Welcome back, Commander! Here's your space station overview.
+                    Bem-vindo de volta, Comandante! Aqui está a visão geral da sua estação espacial.
                 </p>
             </div>
             <div class="col-md-4 text-md-end">
                 <a href="{{ url_for('admin_project_form') }}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus me-2"></i>New Project
+                    <i class="fas fa-plus me-2"></i>Novo Projeto
                 </a>
             </div>
         </div>
@@ -33,7 +33,7 @@
                             <i class="fas fa-rocket"></i>
                         </div>
                         <h3 class="stat-number text-gradient">{{ total_projects }}</h3>
-                        <h6 class="stat-label text-muted">Total Projects</h6>
+                        <h6 class="stat-label text-muted">Total de Projetos</h6>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                             <i class="fas fa-eye"></i>
                         </div>
                         <h3 class="stat-number text-gradient">{{ published_projects }}</h3>
-                        <h6 class="stat-label text-muted">Published</h6>
+                        <h6 class="stat-label text-muted">Publicados</h6>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <h3 class="stat-number text-gradient">{{ total_users }}</h3>
-                        <h6 class="stat-label text-muted">Crew Members</h6>
+                        <h6 class="stat-label text-muted">Membros da Tripulação</h6>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                             <i class="fas fa-comments"></i>
                         </div>
                         <h3 class="stat-number text-gradient">{{ total_comments }}</h3>
-                        <h6 class="stat-label text-muted">Comments</h6>
+                        <h6 class="stat-label text-muted">Comentários</h6>
                     </div>
                 </div>
             </div>
