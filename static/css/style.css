@@ -3270,11 +3270,11 @@ body {
     width: 240px;
     height: 240px;
     border-radius: 50%;
-    border: 4px solid rgba(255, 107, 53, 0.8);
+    border: 3px solid rgba(255, 255, 255, 0.1);
     box-shadow: 
-        0 0 25px rgba(255, 107, 53, 0.6),
-        0 0 50px rgba(255, 107, 53, 0.3),
-        0 4px 15px rgba(0, 0, 0, 0.3);
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 107, 53, 0.2);
     animation: profileImageFloat 8s ease-in-out infinite;
     object-fit: cover;
     transition: all 0.3s ease;
@@ -3286,17 +3286,17 @@ body {
         transform: translateY(0px) scale(1);
         filter: brightness(1.05) contrast(1.1) saturate(1.1);
         box-shadow: 
-            0 0 25px rgba(255, 107, 53, 0.6),
-            0 0 50px rgba(255, 107, 53, 0.3),
-            0 4px 15px rgba(0, 0, 0, 0.3);
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 107, 53, 0.2);
     }
     50% { 
         transform: translateY(-8px) scale(1.01);
         filter: brightness(1.08) contrast(1.12) saturate(1.15);
         box-shadow: 
-            0 0 30px rgba(255, 107, 53, 0.8),
-            0 0 60px rgba(255, 107, 53, 0.4),
-            0 6px 20px rgba(0, 0, 0, 0.3);
+            0 12px 40px rgba(0, 0, 0, 0.5),
+            0 6px 20px rgba(0, 0, 0, 0.4),
+            0 0 25px rgba(255, 107, 53, 0.3);
     }
 }
 
@@ -3305,9 +3305,9 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, rgba(255, 107, 53, 0.15) 50%, transparent 80%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.08) 50%, transparent 80%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
@@ -3318,9 +3318,9 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, rgba(255, 140, 0, 0.2) 0%, rgba(255, 69, 0, 0.1) 40%, transparent 70%);
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(76, 175, 255, 0.1) 0%, rgba(76, 175, 255, 0.05) 40%, transparent 70%);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: -2;
@@ -3329,23 +3329,23 @@ body {
 
 @keyframes primaryGlow {
     0%, 100% { 
-        opacity: 0.6; 
-        transform: translate(-50%, -50%) scale(1); 
-    }
-    50% { 
-        opacity: 0.8; 
-        transform: translate(-50%, -50%) scale(1.05); 
-    }
-}
-
-@keyframes secondaryGlow {
-    0%, 100% { 
         opacity: 0.4; 
         transform: translate(-50%, -50%) scale(1); 
     }
     50% { 
         opacity: 0.6; 
-        transform: translate(-50%, -50%) scale(1.08); 
+        transform: translate(-50%, -50%) scale(1.03); 
+    }
+}
+
+@keyframes secondaryGlow {
+    0%, 100% { 
+        opacity: 0.3; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+    50% { 
+        opacity: 0.5; 
+        transform: translate(-50%, -50%) scale(1.05); 
     }
 }
 
@@ -3496,17 +3496,17 @@ body {
     .profile-main-image {
         width: 200px;
         height: 200px;
-        border: 3px solid rgba(255, 107, 53, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.1);
     }
     
     .profile-glow {
-        width: 260px;
-        height: 260px;
+        width: 240px;
+        height: 240px;
     }
     
     .profile-glow-secondary {
-        width: 310px;
-        height: 310px;
+        width: 280px;
+        height: 280px;
     }
     
     .profile-image-container {
