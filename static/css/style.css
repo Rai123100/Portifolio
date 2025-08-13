@@ -2199,24 +2199,45 @@ body {
     box-shadow: 0 0 40px rgba(0, 123, 255, 0.3);
 }
 
-/* Planetary Ring around Profile Image */
-.profile-main-image::before {
+/* Orbital Ring around Profile Image */
+.profile-image-wrapper::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: 80px;
-    border: 2px solid rgba(76, 118, 255, 0.4);
+    width: 380px;
+    height: 380px;
+    border: 2px solid transparent;
+    border-top: 2px solid rgba(76, 118, 255, 0.6);
+    border-right: 2px solid rgba(0, 212, 255, 0.4);
     border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbital-rotation 20s linear infinite;
     z-index: 2;
-    animation: rotate-planetary-ring 25s linear infinite;
 }
 
-@keyframes rotate-planetary-ring {
-    0% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
-    100% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+.profile-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    height: 420px;
+    border: 1px dashed rgba(76, 118, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbital-rotation-reverse 30s linear infinite reverse;
+    z-index: 1;
+}
+
+@keyframes orbital-rotation {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes orbital-rotation-reverse {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 .profile-glow {
@@ -3386,51 +3407,17 @@ body {
     }
 }
 
-/* Cursor Interactive Effects */
-body {
-    cursor: none;
+/* Mouse Trail Effects - Portfolio 2 Style */
+.mouse-trail-dot {
+    pointer-events: none !important;
+    border-radius: 50% !important;
+    position: fixed !important;
+    z-index: 9999 !important;
 }
 
-.interactive-cursor {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background: rgba(76, 118, 255, 0.8);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: all 0.1s ease;
-    mix-blend-mode: difference;
-}
-
-.cursor-trail {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: rgba(0, 212, 255, 0.6);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-/* Hover effects for interactive elements */
-a:hover, button:hover, .skill-card:hover, .carousel-control:hover {
-    cursor: none;
-}
-
-body:hover .interactive-cursor {
-    opacity: 1;
-}
-
-.skill-card:hover ~ .interactive-cursor,
-.carousel-control:hover ~ .interactive-cursor,
-a:hover ~ .interactive-cursor,
-button:hover ~ .interactive-cursor {
-    transform: translate(-50%, -50%) scale(1.5);
-    background: rgba(0, 212, 255, 1);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+/* Hide trail on mobile */
+@media (max-width: 768px) {
+    .mouse-trail-dot {
+        display: none !important;
+    }
 }
