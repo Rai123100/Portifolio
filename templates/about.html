@@ -3,73 +3,190 @@
 {% block title %}Sobre Mim - Portfólio Astronauta{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <!-- Hero Section for About Page -->
-            <div class="about-hero-section">
-                <div class="row align-items-center min-vh-75">
-                    <div class="col-lg-6 order-2 order-lg-1">
-                        <div class="about-hero-content">
-                            <div class="greeting-section mb-4">
-                                <span class="greeting-emoji">👋</span>
-                                <h2 class="greeting-text">OLÁ MUNDO</h2>
+<div class="about-page-wrapper">
+    <!-- Main About Section -->
+    <section class="about-hero-modern" id="sobre">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <!-- Profile Image Section -->
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <div class="profile-image-container">
+                        <div class="profile-image-wrapper">
+                            <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" 
+                                 alt="Raí Carvalho - Desenvolvedor Full Stack" class="profile-main-image">
+                            
+                            <!-- Orbital Decorations -->
+                            <div class="orbital-decorations">
+                                <div class="orbital-ring ring-1">
+                                    <div class="orbital-dot dot-1"></div>
+                                </div>
+                                <div class="orbital-ring ring-2">
+                                    <div class="orbital-dot dot-2"></div>
+                                    <div class="orbital-dot dot-3"></div>
+                                </div>
+                                <div class="floating-elements">
+                                    <div class="floating-star star-1">✦</div>
+                                    <div class="floating-star star-2">✧</div>
+                                    <div class="floating-star star-3">⭐</div>
+                                </div>
                             </div>
                             
-                            <h1 class="about-main-title mb-4">
-                                EU SOU O <span class="highlight-text">RAÍ CARVALHO</span><br>
-                                <span class="subtitle-text">DESENVOLVEDOR FULL-STACK</span>
-                            </h1>
-                            
-                            <div class="about-intro mb-5">
-                                <p class="intro-text">
-                                    Desenvolvedor full-stack apaixonado por tecnologia e inovação. 
-                                    Especializado em criar soluções digitais eficientes e criativas 
-                                    que transformam ideias em realidade digital.
-                                </p>
-                                <p class="intro-text">
-                                    Como um astronauta explorando o vasto universo digital, estou sempre em busca 
-                                    de novas fronteiras e desafios que me permitam crescer profissionalmente, 
-                                    navegando pelos cosmos da programação.
-                                </p>
-                            </div>
-                            
-                            <div class="hero-cta-buttons">
-                                <a href="#" class="btn-contact-main" onclick="downloadCV()">
-                                    <i class="fas fa-download me-2"></i>Currículo
-                                </a>
-                                <a href="{{ url_for('projects') }}" class="btn-projects-main">
-                                    <i class="fas fa-satellite me-2"></i>Meus Projetos
-                                </a>
-                            </div>
+                            <!-- Background Glow -->
+                            <div class="profile-glow"></div>
                         </div>
                     </div>
-                    
-                    <div class="col-lg-6 order-1 order-lg-2">
-                        <div class="about-character-container">
-                            <div class="character-display-wrapper">
-                                <div class="character-main">
-                                    <img src="{{ url_for('static', filename='images/astronaut-character.svg') }}" 
-                                         alt="Raí Carvalho Character" class="main-character-img">
-                                    <div class="character-aura"></div>
+                </div>
+                
+                <!-- Content Section -->
+                <div class="col-lg-7">
+                    <div class="about-content-modern">
+                        <!-- Header -->
+                        <div class="about-header mb-4">
+                            <div class="greeting-modern mb-3">
+                                <span class="greeting-icon">👋</span>
+                                <span class="greeting-label">HELLO WORLD</span>
+                            </div>
+                            
+                            <h1 class="about-title">
+                                EU SOU O <span class="name-highlight">RAÍ CARVALHO</span>
+                            </h1>
+                            <p class="about-subtitle">
+                                <i class="fas fa-rocket me-2"></i>DESENVOLVEDOR FULL-STACK
+                            </p>
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="about-description mb-5">
+                            <p class="description-text">
+                                Desenvolvedor full-stack apaixonado por tecnologia e inovação, 
+                                especializado em criar soluções digitais que transformam ideias em realidade. 
+                                Como um explorador do universo digital, navego entre frontend e backend, 
+                                sempre em busca de novas fronteiras tecnológicas.
+                            </p>
+                        </div>
+                        
+                        <!-- Stats Cards -->
+                        <div class="stats-section mb-5">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-project-diagram"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h3 class="stat-number">15+</h3>
+                                            <p class="stat-label">Projetos</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                
-                                <!-- Enhanced floating decorations -->
-                                <div class="enhanced-decorations">
-                                    <div class="orbit-circle orbit-1"></div>
-                                    <div class="orbit-circle orbit-2"></div>
-                                    <div class="orbit-circle orbit-3"></div>
-                                    <div class="floating-star star-1"></div>
-                                    <div class="floating-star star-2"></div>
-                                    <div class="floating-star star-3"></div>
-                                    <div class="floating-dot modern-dot-1"></div>
-                                    <div class="floating-dot modern-dot-2"></div>
+                                <div class="col-md-4">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-code"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h3 class="stat-number">3+</h3>
+                                            <p class="stat-label">Anos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">
+                                            <i class="fas fa-tools"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <h3 class="stat-number">12+</h3>
+                                            <p class="stat-label">Tecnologias</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="about-actions">
+                            <a href="#" class="btn-primary-modern" onclick="downloadCV()">
+                                <i class="fas fa-download me-2"></i>Download CV
+                            </a>
+                            <a href="{{ url_for('projects') }}" class="btn-secondary-modern">
+                                <i class="fas fa-rocket me-2"></i>Ver Projetos
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+    
+    <!-- Tech Stack Section -->
+    <section class="tech-stack-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="section-title">
+                        <i class="fas fa-satellite me-3"></i>Arsenal Tecnológico
+                    </h2>
+                    <p class="section-subtitle">
+                        Ferramentas e tecnologias que domino para criar soluções completas
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Frontend -->
+                <div class="col-lg-4">
+                    <div class="tech-category-card">
+                        <div class="tech-category-header">
+                            <i class="fas fa-palette tech-category-icon"></i>
+                            <h3 class="tech-category-title">Frontend</h3>
+                        </div>
+                        <div class="tech-skills-grid">
+                            <span class="tech-skill-tag">HTML5</span>
+                            <span class="tech-skill-tag">CSS3</span>
+                            <span class="tech-skill-tag">JavaScript</span>
+                            <span class="tech-skill-tag">Sass</span>
+                            <span class="tech-skill-tag">Figma</span>
+                            <span class="tech-skill-tag">Canva</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Backend -->
+                <div class="col-lg-4">
+                    <div class="tech-category-card">
+                        <div class="tech-category-header">
+                            <i class="fas fa-server tech-category-icon"></i>
+                            <h3 class="tech-category-title">Backend</h3>
+                        </div>
+                        <div class="tech-skills-grid">
+                            <span class="tech-skill-tag">Python</span>
+                            <span class="tech-skill-tag">Node.js</span>
+                            <span class="tech-skill-tag">Microsoft SQL Server</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DevOps & Cloud -->
+                <div class="col-lg-4">
+                    <div class="tech-category-card">
+                        <div class="tech-category-header">
+                            <i class="fas fa-cloud tech-category-icon"></i>
+                            <h3 class="tech-category-title">Cloud & Tools</h3>
+                        </div>
+                        <div class="tech-skills-grid">
+                            <span class="tech-skill-tag">Google Cloud</span>
+                            <span class="tech-skill-tag">AWS</span>
+                            <span class="tech-skill-tag">Git</span>
+                            <span class="tech-skill-tag">GitHub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
 
                 <!-- Skills Section -->
                 <div class="skills-section py-5">
