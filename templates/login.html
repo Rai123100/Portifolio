@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login - Astronaut Portfolio{% endblock %}
+{% block title %}Login - Portfólio Astronauta{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -11,8 +11,8 @@
                     <div class="auth-icon mb-3">
                         <i class="fas fa-rocket"></i>
                     </div>
-                    <h2 class="h3 text-gradient mb-2">Welcome Back, Astronaut!</h2>
-                    <p class="text-muted">Login to continue your mission</p>
+                    <h2 class="h3 text-gradient mb-2">Bem-vindo de volta, Astronauta!</h2>
+                    <p class="text-muted">Faça login para continuar sua missão</p>
                 </div>
 
                 <form method="POST" novalidate>
@@ -56,14 +56,14 @@
 
                     <div class="d-grid mb-4">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-sign-in-alt me-2"></i>Launch Mission
+                            <i class="fas fa-rocket me-2"></i>Iniciar Missão
                         </button>
                     </div>
 
                     <div class="text-center">
                         <p class="text-muted">
-                            New to our space station? 
-                            <a href="{{ url_for('register') }}" class="text-primary">Join the crew</a>
+                            Novo na nossa estação espacial? 
+                            <a href="{{ url_for('register') }}" class="text-primary">Junte-se à tripulação</a>
                         </p>
                     </div>
                 </form>
