@@ -19,84 +19,85 @@ db = SQLAlchemy(model_class=Base)
 jwt = JWTManager()
 mail = Mail()
 
-def create_app():
-    app = Flask(__name__)
-    
-    # Configuration
-    app.secret_key = os.environ.get("SESSION_SECRET")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+# Create the app
+app = Flask(__name__)
+app.secret_key = os.environ.get("SESSION_SECRET")
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+# Configure the database
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_recycle": 300,
         "pool_pre_ping": True,
     }
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+else:
+    # Fallback to SQLite for development
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# JWT Configuration
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "jwt-secret-string")
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+
+# Mail Configuration
+app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
+app.config["MAIL_PORT"] = int(os.environ.get("MAIL_PORT", 587))
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
+
+# Upload Configuration
+app.config["UPLOAD_FOLDER"] = "static/uploads"
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max file size
+
+# Initialize extensions
+db.init_app(app)
+jwt.init_app(app)
+mail.init_app(app)
+CORS(app)
+
+# Create upload directory
+upload_dir = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
+os.makedirs(upload_dir, exist_ok=True)
+
+with app.app_context():
+    # Make sure to import the models here or their tables won't be created
+    import models  # noqa: F401
+    db.create_all()
     
-    # JWT Configuration
-    app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "jwt-secret-string")
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+    # Create admin user if not exists
+    from models import User
+    from werkzeug.security import generate_password_hash
     
-    # Mail Configuration
-    app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
-    app.config["MAIL_PORT"] = int(os.environ.get("MAIL_PORT", 587))
-    app.config["MAIL_USE_TLS"] = True
-    app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-    app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
-    app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
-    
-    # Upload Configuration
-    app.config["UPLOAD_FOLDER"] = "static/uploads"
-    app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max file size
-    
-    # Initialize extensions
-    db.init_app(app)
-    jwt.init_app(app)
-    mail.init_app(app)
-    CORS(app)
-    
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-    
-    # Create upload directory
-    upload_dir = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
-    os.makedirs(upload_dir, exist_ok=True)
-    
-    with app.app_context():
-        # Import models to create tables
-        import models
-        db.create_all()
-        
-        # Create admin user if not exists
-        from models import User
-        from werkzeug.security import generate_password_hash
-        
-        admin_user = User.query.filter_by(username="Raí123100").first()
-        if not admin_user:
-            admin_user = User()
-            admin_user.username = "Raí123100"
-            admin_user.email = "raicarvalho343@gmail.com"
-            admin_user.password_hash = generate_password_hash("rai123100")
-            admin_user.is_admin = True
-            admin_user.full_name = "Raí Carvalho"
-            db.session.add(admin_user)
-            db.session.commit()
-    
-    # Add template context processor for current year and datetime functions
-    @app.context_processor
-    def inject_current_year():
-        return {
-            'current_year': datetime.now().year,
-            'now': datetime.now
-        }
-    
-    # Template filters
-    @app.template_filter('nl2br')
-    def nl2br_filter(text):
-        """Convert newlines to <br> tags"""
-        if text is None:
-            return ''
-        return text.replace('\n', '<br>\n')
-    
-    # Register routes
-    from routes import register_routes
-    register_routes(app)
-    
-    return app
+    admin_user = User.query.filter_by(username="Raí123100").first()
+    if not admin_user:
+        admin_user = User()
+        admin_user.username = "Raí123100"
+        admin_user.email = "raicarvalho343@gmail.com"
+        admin_user.password_hash = generate_password_hash("rai123100")
+        admin_user.is_admin = True
+        admin_user.full_name = "Raí Carvalho"
+        db.session.add(admin_user)
+        db.session.commit()
+
+# Add template context processor for current year and datetime functions
+@app.context_processor
+def inject_current_year():
+    return {
+        'current_year': datetime.now().year,
+        'now': datetime.now
+    }
+
+# Template filters
+@app.template_filter('nl2br')
+def nl2br_filter(text):
+    """Convert newlines to <br> tags"""
+    if text is None:
+        return ''
+    return text.replace('\n', '<br>\n')
+
+# Register routes
+from routes import register_routes
+register_routes(app)
