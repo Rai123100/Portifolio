@@ -575,15 +575,18 @@ body {
     justify-content: center;
     height: 200px;
     overflow: hidden;
+    padding: 0 50px;
 }
 
 .skills-track {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform;
+    min-width: 100%;
+    flex-wrap: nowrap;
 }
 
 .skill-card {
@@ -635,10 +638,24 @@ body {
 }
 
 .skill-card:hover:not(.active) {
-    opacity: 0.9;
-    transform: scale(1.05);
-    border-color: rgba(76, 118, 255, 0.5);
-    box-shadow: 0 8px 30px rgba(76, 118, 255, 0.2);
+    opacity: 0.95;
+    transform: scale(1.08) translateY(-5px);
+    border-color: var(--accent-color);
+    background: rgba(0, 212, 255, 0.1);
+    box-shadow: 
+        0 8px 30px rgba(0, 212, 255, 0.3),
+        0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.skill-card:hover .skill-icon i {
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.5));
+    transform: scale(1.1);
+}
+
+.skill-card:hover .skill-name {
+    color: var(--accent-color);
+    font-weight: 700;
 }
 
 .skill-icon {
@@ -673,8 +690,8 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(76, 118, 255, 0.2);
-    border: 2px solid var(--primary-color);
+    background: rgba(26, 26, 26, 0.9);
+    border: 2px solid rgba(76, 118, 255, 0.4);
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -684,8 +701,9 @@ body {
     color: var(--primary-color);
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     z-index: 10;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .prev-control {
@@ -699,8 +717,11 @@ body {
 .carousel-control:hover {
     background: var(--primary-color);
     color: white;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 20px rgba(76, 118, 255, 0.4);
+    transform: translateY(-50%) scale(1.15);
+    border-color: var(--accent-color);
+    box-shadow: 
+        0 8px 30px rgba(76, 118, 255, 0.5),
+        0 0 20px rgba(0, 212, 255, 0.3);
 }
 
 /* Removed carousel indicators styles since indicators were removed */
