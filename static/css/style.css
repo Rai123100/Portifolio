@@ -3932,9 +3932,9 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 3rem 4rem;
-    min-height: 180px;
-    min-width: 280px;
+    padding: 3rem 3rem;
+    min-height: 120px;
+    min-width: 120px;
     background: rgba(26, 26, 26, 0.6);
     border-radius: 15px;
     border: 1px solid rgba(76, 118, 255, 0.2);
