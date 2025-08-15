@@ -3610,7 +3610,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: -4rem !important;
+    margin-top: -6rem !important;
     margin-bottom: 2rem !important;
     animation: greetingSlideIn 1s ease-out;
 }
@@ -3932,7 +3932,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 3rem 5rem;
+    padding: 4rem 7rem;
     background: rgba(26, 26, 26, 0.6);
     border-radius: 15px;
     border: 1px solid rgba(76, 118, 255, 0.2);
