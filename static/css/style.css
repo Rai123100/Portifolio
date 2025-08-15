@@ -3610,7 +3610,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: -3rem !important;
+    margin-top: -5rem !important;
     margin-bottom: 2rem !important;
     animation: greetingSlideIn 1s ease-out;
 }
@@ -3932,7 +3932,9 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 2.5rem 3rem;
+    padding: 3rem 4rem;
+    min-height: 180px;
+    min-width: 280px;
     background: rgba(26, 26, 26, 0.6);
     border-radius: 15px;
     border: 1px solid rgba(76, 118, 255, 0.2);
@@ -3972,9 +3974,11 @@ body {
 .contact-card p {
     color: var(--text-muted);
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    max-width: 100%;
+    text-align: center;
 }
 
 .contact-card:hover h5,
