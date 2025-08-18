@@ -10,7 +10,7 @@ Preferred communication style: Simple, everyday language.
 Language: Portuguese (all content should be in Portuguese)
 Tools/Technologies to highlight: HTML5, CSS3, JavaScript, Google Cloud, AWS, Node.js, Git, GitHub, Canva, Figma, Sass, Microsoft SQL Server, Python
 
-## Recent Changes (Updated - August 13, 2025)
+## Recent Changes (Updated - August 18, 2025)
 - ✓ Successfully migrated from Replit Agent to standard Replit environment
 - ✓ Updated skills carousel with complete technology stack (HTML5, CSS3, JavaScript, Google Cloud, AWS, Node.js, Git, GitHub, Canva, Figma, Sass, Microsoft SQL Server, Python)
 - ✓ Added new space-themed profile image for modern astronaut aesthetic
@@ -41,6 +41,14 @@ Tools/Technologies to highlight: HTML5, CSS3, JavaScript, Google Cloud, AWS, Nod
   - Enhanced space elements with faster rotation animations (25s and 15s cycles)
   - Updated both homepage and about page references
   - Maintains perfect integration with futuristic background elements
+- ✓ Completed migration from Replit Agent to standard Replit environment (August 18, 2025):
+  - Fixed JavaScript smooth scrolling error that was causing querySelector('#') syntax error
+  - Updated all social media links with correct URLs:
+    - Instagram: https://www.instagram.com/rai_carvalho_fe/
+    - LinkedIn: https://www.linkedin.com/in/raí-carvalho-849191300
+  - Removed Twitter reference from footer as per user preference
+  - Added target="_blank" to all external social links for better user experience
+  - Fixed app factory pattern for proper Replit deployment compatibility
 
 ## System Architecture
 
