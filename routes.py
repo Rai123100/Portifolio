@@ -132,12 +132,11 @@ def register_routes(app):
                     profile_image = filename
             
             # Create new user
-            user = User(
-                username=form.username.data,
-                full_name=form.full_name.data,
-                email=form.email.data,
-                profile_image=profile_image
-            )
+            user = User()
+            user.username = form.username.data
+            user.full_name = form.full_name.data
+            user.email = form.email.data
+            user.profile_image = profile_image
             user.set_password(form.password.data)
             
             db.session.add(user)
@@ -163,6 +162,10 @@ def register_routes(app):
             return redirect(url_for('login'))
         
         user = User.query.get(session['user_id'])
+        if not user:
+            flash('User not found.', 'error')
+            return redirect(url_for('logout'))
+            
         form = ProfileForm(obj=user)
         
         if form.validate_on_submit():
@@ -196,7 +199,9 @@ def register_routes(app):
             db.session.delete(existing_like)
             liked = False
         else:
-            like = Like(user_id=session['user_id'], project_id=project_id)
+            like = Like()
+            like.user_id = session['user_id']
+            like.project_id = project_id
             db.session.add(like)
             liked = True
         
@@ -218,20 +223,20 @@ def register_routes(app):
         project = Project.query.get_or_404(project_id)
         
         if form.validate_on_submit():
-            comment = Comment(
-                content=form.content.data,
-                user_id=session['user_id'],
-                project_id=project_id
-            )
+            comment = Comment()
+            comment.content = form.content.data
+            comment.user_id = session['user_id']
+            comment.project_id = project_id
             db.session.add(comment)
             db.session.commit()
             
             # Send notification email to admin
-            user = User.query.get(session['user_id'])
-            send_notification_email(
-                f"New comment on '{project.title}'",
-                f"{user.full_name} commented: {form.content.data}"
-            )
+            comment_user = User.query.get(session['user_id'])
+            if comment_user:
+                send_notification_email(
+                    f"New comment on '{project.title}'",
+                    f"{comment_user.full_name} commented: {form.content.data}"
+                )
             
             flash('Comment added successfully!', 'success')
         
