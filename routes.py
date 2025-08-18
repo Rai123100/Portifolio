@@ -50,10 +50,17 @@ def register_routes(app):
         for project in all_projects:
             all_tags.update(project.tag_list)
         
+        # Get user liked projects if logged in
+        user_liked_projects = []
+        if 'user_id' in session:
+            user_likes = Like.query.filter_by(user_id=session['user_id']).all()
+            user_liked_projects = [like.project_id for like in user_likes]
+        
         return render_template('projects.html', 
                              projects=projects, 
                              all_tags=sorted(all_tags),
-                             current_tag=tag)
+                             current_tag=tag,
+                             user_liked_projects=user_liked_projects)
     
     @app.route('/project/<int:project_id>')
     def project_detail(project_id):

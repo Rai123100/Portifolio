@@ -154,6 +154,28 @@ function initializeAnimations() {
         .glow {
             animation: glow 2s ease-in-out infinite alternate;
         }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(76, 118, 255, 0.5); }
+            to { box-shadow: 0 0 20px rgba(76, 118, 255, 0.8); }
+        }
+        
+        @keyframes likeFloat {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-50px) scale(1.5); 
+            }
+        }
     `;
     document.head.appendChild(animationStyles);
     
