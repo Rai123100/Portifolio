@@ -209,10 +209,14 @@ function initializeInteractiveElements() {
             heartIcon.classList.add('fa-spinner', 'fa-spin');
             heartIcon.classList.remove('fa-heart');
             
+            // Get CSRF token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            
             fetch(`/like/${projectId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken || ''
                 }
             })
             .then(response => response.json())

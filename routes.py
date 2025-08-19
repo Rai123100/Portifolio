@@ -20,10 +20,17 @@ def register_routes(app):
         recent_projects = Project.query.filter_by(is_published=True).order_by(Project.created_at.desc()).limit(6).all()
         achievements = Achievement.query.filter_by(is_published=True).order_by(Achievement.date_achieved.desc()).limit(4).all()
         
+        # Get user liked projects if logged in
+        user_liked_projects = []
+        if 'user_id' in session:
+            user_likes = Like.query.filter_by(user_id=session['user_id']).all()
+            user_liked_projects = [like.project_id for like in user_likes]
+        
         return render_template('index.html', 
                              featured_projects=featured_projects,
                              recent_projects=recent_projects,
-                             achievements=achievements)
+                             achievements=achievements,
+                             user_liked_projects=user_liked_projects)
     
     @app.route('/about')
     def about():
