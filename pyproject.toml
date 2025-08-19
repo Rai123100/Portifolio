@@ -19,4 +19,5 @@ dependencies = [
     "flask-jwt-extended>=4.7.1",
     "flask-mail>=0.10.0",
     "flask-cors>=6.0.1",
+    "requests>=2.32.5",
 ]

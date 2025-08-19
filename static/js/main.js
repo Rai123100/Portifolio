@@ -218,7 +218,7 @@ function initializeInteractiveElements() {
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    showNotification('Please log in to like projects', 'error');
+                    showNotification('Faça login para curtir projetos', 'error');
                     return;
                 }
                 
@@ -240,7 +240,7 @@ function initializeInteractiveElements() {
             })
             .catch(error => {
                 console.error('Error:', error);
-                showNotification('Something went wrong. Please try again.', 'error');
+                showNotification('Algo deu errado. Tente novamente.', 'error');
             })
             .finally(() => {
                 // Remove loading state
@@ -266,9 +266,9 @@ function initializeInteractiveElements() {
                     this.classList.remove('btn-success');
                 }, 2000);
                 
-                showNotification('Link copied to clipboard!', 'success');
+                showNotification('Link copiado para a área de transferência!', 'success');
             }).catch(() => {
-                showNotification('Failed to copy link', 'error');
+                showNotification('Falha ao copiar link', 'error');
             });
         });
     });

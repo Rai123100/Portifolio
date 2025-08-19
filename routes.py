@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from datetime import datetime
 import uuid
 
-from app import db
+from app import db, csrf
 from models import User, Project, Comment, Like, Achievement
 from forms import LoginForm, RegisterForm, ProjectForm, CommentForm, AchievementForm, ProfileForm
 from utils import allowed_file, send_notification_email
@@ -194,6 +194,7 @@ def register_routes(app):
         return render_template('profile.html', form=form, user=user)
     
     @app.route('/like/<int:project_id>', methods=['POST'])
+    @csrf.exempt
     def toggle_like(project_id):
         """Toggle like for a project"""
         if 'user_id' not in session:

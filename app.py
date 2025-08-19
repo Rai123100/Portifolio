@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask_cors import CORS
+from flask_wtf.csrf import CSRFProtect
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import timedelta, datetime
@@ -18,6 +19,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 jwt = JWTManager()
 mail = Mail()
+csrf = CSRFProtect()
 
 # Create the app
 app = Flask(__name__)
@@ -56,6 +58,7 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max file size
 db.init_app(app)
 jwt.init_app(app)
 mail.init_app(app)
+csrf.init_app(app)
 CORS(app)
 
 # Create upload directory
