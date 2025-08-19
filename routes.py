@@ -320,9 +320,9 @@ def register_routes(app):
             
             if not project_id:
                 db.session.add(project)
-                flash('Project created successfully!', 'success')
+                flash('Projeto criado com sucesso!', 'success')
             else:
-                flash('Project updated successfully!', 'success')
+                flash('Projeto atualizado com sucesso!', 'success')
             
             db.session.commit()
             return redirect(url_for('admin_projects'))
@@ -330,6 +330,7 @@ def register_routes(app):
         return render_template('admin/project_form.html', form=form, project=project)
     
     @app.route('/admin/project/<int:project_id>/delete', methods=['POST'])
+    @csrf.exempt
     def admin_delete_project(project_id):
         """Admin delete project"""
         if 'user_id' not in session or not session.get('is_admin'):
@@ -340,5 +341,5 @@ def register_routes(app):
         db.session.delete(project)
         db.session.commit()
         
-        flash('Project deleted successfully!', 'success')
+        flash('Projeto deletado com sucesso!', 'success')
         return redirect(url_for('admin_projects'))

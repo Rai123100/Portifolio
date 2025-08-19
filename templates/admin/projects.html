@@ -277,24 +277,25 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                    Confirm Deletion
+                    Confirmar Exclusão
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the project <strong id="projectToDelete"></strong>?</p>
+                <p>Tem certeza que deseja deletar o projeto <strong id="projectToDelete"></strong>?</p>
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle me-2"></i>
-                    This action cannot be undone. All associated comments and likes will also be deleted.
+                    Esta ação não pode ser desfeita. Todos os comentários e curtidas associados também serão deletados.
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-2"></i>Cancel
+                    <i class="fas fa-times me-2"></i>Cancelar
                 </button>
                 <form id="deleteForm" method="POST" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash me-2"></i>Delete Project
+                        <i class="fas fa-trash me-2"></i>Deletar Projeto
                     </button>
                 </form>
             </div>
