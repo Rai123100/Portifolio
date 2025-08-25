@@ -96,3 +96,33 @@ class Achievement(db.Model):
     
     def __repr__(self):
         return f'<Achievement {self.title}>'
+
+class Certificate(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    issuer = db.Column(db.String(200), nullable=False)  # SENAI, Google Cloud, Credly, etc.
+    certificate_type = db.Column(db.String(100), nullable=False)  # Curso, Badge, Certificação
+    image = db.Column(db.String(200))  # Badge/certificate image
+    credential_url = db.Column(db.String(500))  # Link para verificação (Credly, Google Cloud)
+    credential_id = db.Column(db.String(200))  # ID do certificado/badge
+    date_issued = db.Column(db.Date)
+    expiry_date = db.Column(db.Date)  # Para certificações que expiram
+    skills = db.Column(db.String(500))  # Competências/skills separadas por vírgula
+    is_published = db.Column(db.Boolean, default=False)
+    featured = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    @property
+    def skill_list(self):
+        return [skill.strip() for skill in self.skills.split(',') if skill.strip()] if self.skills else []
+    
+    @property
+    def is_expired(self):
+        if self.expiry_date:
+            return self.expiry_date < datetime.now().date()
+        return False
+    
+    def __repr__(self):
+        return f'<Certificate {self.title}>'

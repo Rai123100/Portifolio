@@ -53,3 +53,25 @@ class ProfileForm(FlaskForm):
     full_name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=100)])
     profile_image = FileField('Profile Image', 
                              validators=[FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Images only!')])
+
+class CertificateForm(FlaskForm):
+    title = StringField('Título do Certificado', validators=[DataRequired(), Length(max=200)])
+    description = TextAreaField('Descrição', validators=[DataRequired()])
+    issuer = StringField('Instituição/Emissor', validators=[DataRequired(), Length(max=200)])
+    certificate_type = SelectField('Tipo', choices=[
+        ('Curso', 'Curso'),
+        ('Certificação', 'Certificação'),
+        ('Badge', 'Badge'),
+        ('Especialização', 'Especialização'),
+        ('Workshop', 'Workshop'),
+        ('Treinamento', 'Treinamento')
+    ], validators=[DataRequired()])
+    image = FileField('Imagem/Badge', 
+                     validators=[Optional(), FileAllowed(['jpg', 'png', 'jpeg', 'gif', 'svg'], 'Imagens apenas!')])
+    credential_url = StringField('URL do Certificado', validators=[Optional(), URL()])
+    credential_id = StringField('ID do Certificado', validators=[Optional(), Length(max=200)])
+    date_issued = DateField('Data de Emissão', validators=[Optional()])
+    expiry_date = DateField('Data de Validade', validators=[Optional()])
+    skills = TextAreaField('Competências (separadas por vírgula)', validators=[Optional()])
+    is_published = BooleanField('Publicar')
+    featured = BooleanField('Destacar')

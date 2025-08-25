@@ -71,6 +71,30 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="stat-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="stat-icon text-secondary mb-3">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="stat-number text-gradient">{{ total_certificates }}</h3>
+                        <h6 class="stat-label text-muted">Total de Certificados</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 mb-4">
+                <div class="stat-card card h-100">
+                    <div class="card-body text-center">
+                        <div class="stat-icon text-primary mb-3">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="stat-number text-gradient">{{ published_certificates }}</h3>
+                        <h6 class="stat-label text-muted">Certificados Publicados</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Quick Actions -->
@@ -96,6 +120,15 @@
                         <i class="fas fa-satellite text-success mb-2"></i>
                         <h6 class="card-title">Manage Projects</h6>
                         <p class="card-text text-muted small">View and edit missions</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <a href="{{ url_for('admin_certificates') }}" class="action-card card text-decoration-none">
+                    <div class="card-body text-center">
+                        <i class="fas fa-certificate text-secondary mb-2"></i>
+                        <h6 class="card-title">Manage Certificates</h6>
+                        <p class="card-text text-muted small">View and edit badges</p>
                     </div>
                 </a>
             </div>

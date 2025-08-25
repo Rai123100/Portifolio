@@ -174,6 +174,68 @@
         </div>
     </section>
 
+    <!-- Certificates Section -->
+    {% if certificates %}
+    <section class="certificates-section py-5 bg-dark-secondary">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="section-title">
+                        <i class="fas fa-certificate me-3"></i>Certificações & Badges
+                    </h2>
+                    <p class="section-subtitle">
+                        Comprovações das minhas competências e especializações
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                {% for cert in certificates[:6] %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="certificate-card-about">
+                        {% if cert.image %}
+                        <div class="certificate-image">
+                            <img src="{{ url_for('static', filename='uploads/' + cert.image) }}" 
+                                 alt="{{ cert.title }}" 
+                                 class="img-fluid">
+                        </div>
+                        {% endif %}
+                        <div class="certificate-content">
+                            <h5 class="certificate-title">{{ cert.title }}</h5>
+                            <p class="certificate-issuer">
+                                <i class="fas fa-building me-2"></i>{{ cert.issuer }}
+                            </p>
+                            <p class="certificate-type">
+                                <i class="fas fa-tag me-2"></i>{{ cert.certificate_type }}
+                            </p>
+                            {% if cert.date_issued %}
+                            <p class="certificate-date">
+                                <i class="fas fa-calendar me-2"></i>{{ cert.date_issued.strftime('%m/%Y') }}
+                            </p>
+                            {% endif %}
+                            {% if cert.credential_url %}
+                            <a href="{{ cert.credential_url }}" target="_blank" 
+                               class="btn-certificate-verify">
+                                <i class="fas fa-external-link-alt me-2"></i>Verificar
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if certificates|length > 6 %}
+            <div class="text-center mt-5">
+                <a href="{{ url_for('certificates') }}" class="btn-primary-modern">
+                    <i class="fas fa-certificate me-2"></i>Ver Todos os Certificados
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
     <!-- Jornada Section -->
     <section class="journey-section py-5">
         <div class="container">

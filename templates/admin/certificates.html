@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Certificados - Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3">
+                    <i class="fas fa-certificate text-primary me-2"></i>Gerenciar Certificados
+                </h1>
+                <div>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary me-2">
+                        <i class="fas fa-arrow-left me-2"></i>Dashboard
+                    </a>
+                    <a href="{{ url_for('admin_certificate_form') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Novo Certificado
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificates Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    {% if certificates.items %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Título</th>
+                                    <th>Emissor</th>
+                                    <th>Tipo</th>
+                                    <th>Data Emissão</th>
+                                    <th>Status</th>
+                                    <th>Destaque</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cert in certificates.items %}
+                                <tr>
+                                    <td>{{ cert.id }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {% if cert.image %}
+                                            <img src="{{ url_for('static', filename='uploads/' + cert.image) }}" 
+                                                 alt="{{ cert.title }}" 
+                                                 class="me-2 rounded"
+                                                 style="width: 40px; height: 40px; object-fit: cover;">
+                                            {% endif %}
+                                            <div>
+                                                <strong>{{ cert.title }}</strong>
+                                                {% if cert.credential_id %}
+                                                <br><small class="text-muted">ID: {{ cert.credential_id }}</small>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ cert.issuer }}</td>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ cert.certificate_type }}</span>
+                                    </td>
+                                    <td>
+                                        {% if cert.date_issued %}
+                                        {{ cert.date_issued.strftime('%d/%m/%Y') }}
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if cert.is_published %}
+                                        <span class="badge bg-success">Publicado</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">Rascunho</span>
+                                        {% endif %}
+                                        
+                                        {% if cert.expiry_date and cert.is_expired %}
+                                        <span class="badge bg-danger">Expirado</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if cert.featured %}
+                                        <i class="fas fa-star text-warning"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            {% if cert.credential_url %}
+                                            <a href="{{ cert.credential_url }}" target="_blank" 
+                                               class="btn btn-sm btn-outline-info" title="Ver Certificado">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                            {% endif %}
+                                            <a href="{{ url_for('admin_certificate_form', certificate_id=cert.id) }}" 
+                                               class="btn btn-sm btn-outline-primary" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form method="POST" 
+                                                  action="{{ url_for('admin_delete_certificate', certificate_id=cert.id) }}" 
+                                                  class="d-inline"
+                                                  onsubmit="return confirm('Tem certeza que deseja deletar este certificado?')">
+                                                {{ csrf_token() }}
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Deletar">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if certificates.pages > 1 %}
+                    <nav aria-label="Paginação">
+                        <ul class="pagination justify-content-center">
+                            {% if certificates.has_prev %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_certificates', page=certificates.prev_num) }}">Anterior</a>
+                            </li>
+                            {% endif %}
+                            
+                            {% for page_num in certificates.iter_pages() %}
+                                {% if page_num %}
+                                    {% if page_num != certificates.page %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('admin_certificates', page=page_num) }}">{{ page_num }}</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ page_num }}</span>
+                                    </li>
+                                    {% endif %}
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if certificates.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_certificates', page=certificates.next_num) }}">Próximo</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                    
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-certificate fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Nenhum certificado encontrado</h5>
+                        <p class="text-muted">Clique no botão "Novo Certificado" para criar o primeiro.</p>
+                        <a href="{{ url_for('admin_certificate_form') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Novo Certificado
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

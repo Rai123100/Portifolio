@@ -7,8 +7,8 @@ from datetime import datetime
 import uuid
 
 from app import db, csrf
-from models import User, Project, Comment, Like, Achievement
-from forms import LoginForm, RegisterForm, ProjectForm, CommentForm, AchievementForm, ProfileForm
+from models import User, Project, Comment, Like, Achievement, Certificate
+from forms import LoginForm, RegisterForm, ProjectForm, CommentForm, AchievementForm, ProfileForm, CertificateForm
 from utils import allowed_file, send_notification_email
 
 def register_routes(app):
@@ -35,7 +35,25 @@ def register_routes(app):
     @app.route('/about')
     def about():
         """About me page"""
-        return render_template('about.html')
+        certificates = Certificate.query.filter_by(is_published=True).order_by(Certificate.date_issued.desc()).all()
+        return render_template('about.html', certificates=certificates)
+    
+    @app.route('/certificates')
+    def certificates():
+        """Certificates page"""
+        featured_certificates = Certificate.query.filter_by(is_published=True, featured=True).order_by(Certificate.date_issued.desc()).all()
+        all_certificates = Certificate.query.filter_by(is_published=True).order_by(Certificate.date_issued.desc()).all()
+        
+        # Group certificates by issuer
+        certificates_by_issuer = {}
+        for cert in all_certificates:
+            if cert.issuer not in certificates_by_issuer:
+                certificates_by_issuer[cert.issuer] = []
+            certificates_by_issuer[cert.issuer].append(cert)
+        
+        return render_template('certificates.html', 
+                             featured_certificates=featured_certificates,
+                             certificates_by_issuer=certificates_by_issuer)
     
     @app.route('/projects')
     def projects():
@@ -269,6 +287,8 @@ def register_routes(app):
         published_projects = Project.query.filter_by(is_published=True).count()
         total_users = User.query.count()
         total_comments = Comment.query.count()
+        total_certificates = Certificate.query.count()
+        published_certificates = Certificate.query.filter_by(is_published=True).count()
         
         recent_comments = Comment.query.order_by(Comment.created_at.desc()).limit(5).all()
         
@@ -277,6 +297,8 @@ def register_routes(app):
                              published_projects=published_projects,
                              total_users=total_users,
                              total_comments=total_comments,
+                             total_certificates=total_certificates,
+                             published_certificates=published_certificates,
                              recent_comments=recent_comments)
     
     @app.route('/admin/projects')
@@ -350,3 +372,79 @@ def register_routes(app):
         
         flash('Projeto deletado com sucesso!', 'success')
         return redirect(url_for('admin_projects'))
+    
+    # Admin Certificate Routes
+    @app.route('/admin/certificates')
+    def admin_certificates():
+        """Admin certificates management"""
+        if 'user_id' not in session or not session.get('is_admin'):
+            flash('Access denied.', 'error')
+            return redirect(url_for('login'))
+        
+        page = request.args.get('page', 1, type=int)
+        certificates = Certificate.query.order_by(Certificate.created_at.desc()).paginate(
+            page=page, per_page=10, error_out=False)
+        
+        return render_template('admin/certificates.html', certificates=certificates)
+    
+    @app.route('/admin/certificate/new', methods=['GET', 'POST'])
+    @app.route('/admin/certificate/<int:certificate_id>/edit', methods=['GET', 'POST'])
+    def admin_certificate_form(certificate_id=None):
+        """Admin certificate form (create/edit)"""
+        if 'user_id' not in session or not session.get('is_admin'):
+            flash('Access denied.', 'error')
+            return redirect(url_for('login'))
+        
+        certificate = Certificate.query.get(certificate_id) if certificate_id else None
+        form = CertificateForm(obj=certificate)
+        
+        if form.validate_on_submit():
+            if not certificate:
+                certificate = Certificate()
+            
+            certificate.title = form.title.data
+            certificate.description = form.description.data
+            certificate.issuer = form.issuer.data
+            certificate.certificate_type = form.certificate_type.data
+            certificate.credential_url = form.credential_url.data
+            certificate.credential_id = form.credential_id.data
+            certificate.date_issued = form.date_issued.data
+            certificate.expiry_date = form.expiry_date.data
+            certificate.skills = form.skills.data
+            certificate.is_published = form.is_published.data
+            certificate.featured = form.featured.data
+            
+            # Handle image upload
+            if form.image.data and hasattr(form.image.data, 'filename'):
+                file = form.image.data
+                if allowed_file(file.filename):
+                    filename = str(uuid.uuid4()) + '.' + file.filename.rsplit('.', 1)[1].lower()
+                    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    certificate.image = filename
+            
+            if not certificate_id:
+                db.session.add(certificate)
+                flash('Certificado criado com sucesso!', 'success')
+            else:
+                flash('Certificado atualizado com sucesso!', 'success')
+            
+            db.session.commit()
+            return redirect(url_for('admin_certificates'))
+        
+        return render_template('admin/certificate_form.html', form=form, certificate=certificate)
+    
+    @app.route('/admin/certificate/<int:certificate_id>/delete', methods=['POST'])
+    @csrf.exempt
+    def admin_delete_certificate(certificate_id):
+        """Admin delete certificate"""
+        if 'user_id' not in session or not session.get('is_admin'):
+            flash('Access denied.', 'error')
+            return redirect(url_for('login'))
+        
+        certificate = Certificate.query.get_or_404(certificate_id)
+        db.session.delete(certificate)
+        db.session.commit()
+        
+        flash('Certificado deletado com sucesso!', 'success')
+        return redirect(url_for('admin_certificates'))
