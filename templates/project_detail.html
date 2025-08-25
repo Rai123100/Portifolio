@@ -249,34 +249,57 @@
 <script>
 // Like button functionality
 document.querySelectorAll('.like-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
         const projectId = this.dataset.projectId;
         const likeCount = this.querySelector('.like-count');
+        const heartIcon = this.querySelector('i');
+        
+        // Add loading state
+        this.disabled = true;
+        heartIcon.classList.add('fa-spinner', 'fa-spin');
+        heartIcon.classList.remove('fa-heart');
+        
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
         
         fetch(`/like/${projectId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken || ''
             }
         })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                alert('Please login to like projects');
+                alert('Faça login para curtir projetos');
                 return;
             }
             
+            // Update UI
             likeCount.textContent = data.like_count;
+            
             if (data.liked) {
                 this.classList.remove('btn-outline-primary');
                 this.classList.add('btn-primary');
+                heartIcon.classList.add('pulse');
             } else {
                 this.classList.remove('btn-primary');
                 this.classList.add('btn-outline-primary');
+                heartIcon.classList.remove('pulse');
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            alert('Algo deu errado. Tente novamente.');
+        })
+        .finally(() => {
+            // Remove loading state
+            this.disabled = false;
+            heartIcon.classList.remove('fa-spinner', 'fa-spin');
+            heartIcon.classList.add('fa-heart');
         });
     });
 });

@@ -83,17 +83,37 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="issuer-section">
-                    <h3 class="mb-4 fw-bold d-flex align-items-center">
-                        {% if issuer == 'SENAI' %}
-                        <i class="fas fa-industry text-primary me-3"></i>
-                        {% elif issuer == 'Google Cloud' %}
-                        <i class="fab fa-google text-primary me-3"></i>
-                        {% elif issuer == 'Credly' %}
-                        <i class="fas fa-medal text-primary me-3"></i>
-                        {% else %}
-                        <i class="fas fa-certificate text-primary me-3"></i>
-                        {% endif %}
-                        {{ issuer }}
+                    <h3 class="mb-4 fw-bold d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            {% if issuer == 'SENAI' %}
+                            <i class="fas fa-industry text-primary me-3"></i>
+                            {% elif issuer == 'Google Cloud' %}
+                            <i class="fab fa-google text-primary me-3"></i>
+                            {% elif issuer == 'Credly' %}
+                            <i class="fas fa-medal text-primary me-3"></i>
+                            {% else %}
+                            <i class="fas fa-certificate text-primary me-3"></i>
+                            {% endif %}
+                            {{ issuer }}
+                        </div>
+                        <div class="platform-links">
+                            {% if issuer == 'Google Cloud' %}
+                            <a href="https://cloud.google.com/certification" target="_blank" 
+                               class="btn btn-sm btn-outline-primary me-2" title="Visitar Google Cloud Certification">
+                                <i class="fab fa-google me-1"></i>Plataforma
+                            </a>
+                            {% elif issuer == 'Credly' %}
+                            <a href="https://www.credly.com/" target="_blank" 
+                               class="btn btn-sm btn-outline-primary me-2" title="Visitar Credly">
+                                <i class="fas fa-medal me-1"></i>Plataforma
+                            </a>
+                            {% elif issuer == 'SENAI' %}
+                            <a href="https://www.senai.br/" target="_blank" 
+                               class="btn btn-sm btn-outline-primary me-2" title="Visitar SENAI">
+                                <i class="fas fa-industry me-1"></i>Plataforma
+                            </a>
+                            {% endif %}
+                        </div>
                     </h3>
                     
                     <div class="row g-4">
