@@ -33,10 +33,14 @@ if database_url:
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_recycle": 300,
         "pool_pre_ping": True,
+        "connect_args": {"client_encoding": "utf8"}
     }
 else:
     # Fallback to SQLite for development
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "connect_args": {"check_same_thread": False}
+    }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # JWT Configuration
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "jwt-secret-string")
@@ -74,14 +78,14 @@ with app.app_context():
     from models import User
     from werkzeug.security import generate_password_hash
     
-    admin_user = User.query.filter_by(username="Raí123100").first()
+    admin_user = User.query.filter_by(username="admin").first()
     if not admin_user:
         admin_user = User()
-        admin_user.username = "Raí123100"
-        admin_user.email = "raicarvalho343@gmail.com"
-        admin_user.password_hash = generate_password_hash("rai123100")
+        admin_user.username = "admin"
+        admin_user.email = "admin@example.com"
+        admin_user.password_hash = generate_password_hash("admin123")
         admin_user.is_admin = True
-        admin_user.full_name = "Raí Carvalho"
+        admin_user.full_name = "Administrator"
         db.session.add(admin_user)
         db.session.commit()
 
