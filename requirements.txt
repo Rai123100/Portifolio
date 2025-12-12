@@ -6,3 +6,4 @@ Flask-Cors
 Flask-WTF
 python-dotenv
 psycopg2-binary
+email-validator
