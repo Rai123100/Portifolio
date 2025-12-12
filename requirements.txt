@@ -1,5 +1,8 @@
-flask
-flask_sqlalchemy
-flask_login
-flask_wtf
+Flask
+Flask-SQLAlchemy
+Flask-JWT-Extended
+Flask-Mail
+Flask-Cors
+Flask-WTF
 python-dotenv
+psycopg2-binary
