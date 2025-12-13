@@ -303,13 +303,12 @@
     
     // CV Download Function
     function downloadCV() {
-        // Create a temporary download link
         const link = document.createElement('a');
-        link.href = '#'; // Replace with actual CV file path when available
-        link.download = 'Rai_Carvalho_CV.pdf';
-        
-        // For now, show a message to the user
-        alert('Currículo será disponibilizado em breve! Entre em contato para solicitar: raicarvalho343@gmail.com');
+        link.href = '/static/CV_Rai_Carvalho.pdf';
+        link.download = 'CV_Rai_Carvalho.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
     </script>
 
@@ -486,13 +485,12 @@
 <script>
 // CV Download Function
 function downloadCV() {
-    // Create a temporary download link
     const link = document.createElement('a');
-    link.href = '#'; // Replace with actual CV file path when available
-    link.download = 'Rai_Carvalho_CV.pdf';
-    
-    // For now, show a message to the user
-    alert('Currículo será disponibilizado em breve! Entre em contato para solicitar: raicarvalho343@gmail.com');
+    link.href = '/static/CV_Rai_Carvalho.pdf';
+    link.download = 'CV_Rai_Carvalho.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 // Smooth scrolling for anchor links

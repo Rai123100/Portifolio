@@ -2,7 +2,7 @@
 
 {% block title %}Certificados e Badges - Raí Carvalho{% endblock %}
 
-{% block meta_description %}Explore meus certificados profissionais, badges digitais e especializações em tecnologia, incluindo cursos do SENAI, Google Cloud e outras instituições.{% endblock %}
+{% block meta_description %}Explore meus certificados profissionais, badges digitais e especializações em tecnologia.{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-5">
@@ -20,191 +20,111 @@
         </div>
     </section>
 
-    <!-- Featured Certificates -->
-    {% if featured_certificates %}
-    <section class="mb-5">
+    <!-- Certificate Links Section -->
+    <section class="certificate-links-section py-5">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <h2 class="text-center mb-4">
-                    <i class="fas fa-star text-warning me-2"></i>Certificados em Destaque
-                </h2>
-                <div class="row g-4">
-                    {% for cert in featured_certificates %}
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card h-100 border-0 shadow-sm certificate-card">
-                            {% if cert.image %}
-                            <div class="text-center p-3">
-                                <img src="{{ url_for('static', filename='uploads/' + cert.image) }}" 
-                                     alt="{{ cert.title }}" 
-                                     class="certificate-badge img-fluid"
-                                     style="max-height: 120px; object-fit: contain;">
+                <div class="row g-4 justify-content-center">
+                    <!-- Google Skills Button -->
+                    <div class="col-md-4">
+                        <a href="https://www.skills.google/public_profiles/44e5c031-3fc8-49b7-a197-4f28d8c08291" 
+                           target="_blank" 
+                           class="certificate-link-card d-block text-center p-5 h-100">
+                            <div class="certificate-link-icon mb-4">
+                                <i class="fab fa-google fa-4x"></i>
                             </div>
-                            {% endif %}
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ cert.title }}</h5>
-                                <p class="text-muted small mb-2">
-                                    <i class="fas fa-building me-1"></i>{{ cert.issuer }}
-                                </p>
-                                <p class="text-muted small mb-2">
-                                    <i class="fas fa-tag me-1"></i>{{ cert.certificate_type }}
-                                </p>
-                                {% if cert.date_issued %}
-                                <p class="text-muted small mb-3">
-                                    <i class="fas fa-calendar me-1"></i>{{ cert.date_issued.strftime('%m/%Y') }}
-                                </p>
-                                {% endif %}
-                                <p class="card-text flex-grow-1">{{ cert.description }}</p>
-                                {% if cert.skills %}
-                                <div class="mb-3">
-                                    {% for skill in cert.skill_list %}
-                                    <span class="badge bg-secondary me-1">{{ skill }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                                {% if cert.credential_url %}
-                                <a href="{{ cert.credential_url }}" target="_blank" 
-                                   class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-external-link-alt me-2"></i>Verificar Certificado
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
+                            <h3 class="certificate-link-title mb-3">Google Skills</h3>
+                            <p class="certificate-link-description text-muted">
+                                Veja meus certificados e badges do Google
+                            </p>
+                            <span class="btn btn-outline-primary mt-3">
+                                <i class="fas fa-external-link-alt me-2"></i>Acessar
+                            </span>
+                        </a>
                     </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </section>
-    {% endif %}
 
-    <!-- Certificates by Issuer -->
-    {% for issuer, certs in certificates_by_issuer.items() %}
-    <section class="mb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="issuer-section">
-                    <h3 class="mb-4 fw-bold d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            {% if issuer == 'SENAI' %}
-                            <i class="fas fa-industry text-primary me-3"></i>
-                            {% elif issuer == 'Google Cloud' %}
-                            <i class="fab fa-google text-primary me-3"></i>
-                            {% elif issuer == 'Credly' %}
-                            <i class="fas fa-medal text-primary me-3"></i>
-                            {% else %}
-                            <i class="fas fa-certificate text-primary me-3"></i>
-                            {% endif %}
-                            {{ issuer }}
-                        </div>
-                        <div class="platform-links">
-                            {% if issuer == 'Google Cloud' %}
-                            <a href="https://cloud.google.com/certification" target="_blank" 
-                               class="btn btn-sm btn-outline-primary me-2" title="Visitar Google Cloud Certification">
-                                <i class="fab fa-google me-1"></i>Plataforma
-                            </a>
-                            {% elif issuer == 'Credly' %}
-                            <a href="https://www.credly.com/" target="_blank" 
-                               class="btn btn-sm btn-outline-primary me-2" title="Visitar Credly">
-                                <i class="fas fa-medal me-1"></i>Plataforma
-                            </a>
-                            {% elif issuer == 'SENAI' %}
-                            <a href="https://www.senai.br/" target="_blank" 
-                               class="btn btn-sm btn-outline-primary me-2" title="Visitar SENAI">
-                                <i class="fas fa-industry me-1"></i>Plataforma
-                            </a>
-                            {% endif %}
-                        </div>
-                    </h3>
-                    
-                    <div class="row g-4">
-                        {% for cert in certs %}
-                        {% if not cert.featured %}
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 border-0 shadow-sm certificate-card">
-                                {% if cert.image %}
-                                <div class="text-center p-3">
-                                    <img src="{{ url_for('static', filename='uploads/' + cert.image) }}" 
-                                         alt="{{ cert.title }}" 
-                                         class="certificate-badge img-fluid"
-                                         style="max-height: 100px; object-fit: contain;">
-                                </div>
-                                {% endif %}
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="card-title">{{ cert.title }}</h6>
-                                    <p class="text-muted small mb-2">
-                                        <i class="fas fa-tag me-1"></i>{{ cert.certificate_type }}
-                                    </p>
-                                    {% if cert.date_issued %}
-                                    <p class="text-muted small mb-2">
-                                        <i class="fas fa-calendar me-1"></i>{{ cert.date_issued.strftime('%m/%Y') }}
-                                    </p>
-                                    {% endif %}
-                                    {% if cert.expiry_date %}
-                                    <p class="text-muted small mb-2">
-                                        <i class="fas fa-clock me-1"></i>Válido até {{ cert.expiry_date.strftime('%m/%Y') }}
-                                        {% if cert.is_expired %}
-                                        <span class="badge bg-warning">Expirado</span>
-                                        {% endif %}
-                                    </p>
-                                    {% endif %}
-                                    <p class="card-text small flex-grow-1">{{ cert.description }}</p>
-                                    {% if cert.skills %}
-                                    <div class="mb-2">
-                                        {% for skill in cert.skill_list[:3] %}
-                                        <span class="badge bg-light text-dark small me-1">{{ skill }}</span>
-                                        {% endfor %}
-                                        {% if cert.skill_list|length > 3 %}
-                                        <span class="badge bg-light text-muted small">+{{ cert.skill_list|length - 3 }}</span>
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
-                                    {% if cert.credential_url %}
-                                    <a href="{{ cert.credential_url }}" target="_blank" 
-                                       class="btn btn-outline-primary btn-sm">
-                                        <i class="fas fa-external-link-alt me-1"></i>Verificar
-                                    </a>
-                                    {% endif %}
-                                </div>
+                    <!-- Credly Button -->
+                    <div class="col-md-4">
+                        <a href="https://www.credly.com/users/rai-carvalho" 
+                           target="_blank" 
+                           class="certificate-link-card d-block text-center p-5 h-100">
+                            <div class="certificate-link-icon mb-4">
+                                <i class="fas fa-medal fa-4x"></i>
                             </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
+                            <h3 class="certificate-link-title mb-3">Credly</h3>
+                            <p class="certificate-link-description text-muted">
+                                Confira meus badges e credenciais digitais
+                            </p>
+                            <span class="btn btn-outline-primary mt-3">
+                                <i class="fas fa-external-link-alt me-2"></i>Acessar
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Google Drive Button -->
+                    <div class="col-md-4">
+                        <a href="https://drive.google.com/drive/folders/1-Qa2S4ZPXmXDKy5Vp2uqN9iV6whKEHoJ?usp=drive_link" 
+                           target="_blank" 
+                           class="certificate-link-card d-block text-center p-5 h-100">
+                            <div class="certificate-link-icon mb-4">
+                                <i class="fab fa-google-drive fa-4x"></i>
+                            </div>
+                            <h3 class="certificate-link-title mb-3">Google Drive</h3>
+                            <p class="certificate-link-description text-muted">
+                                Acesse meus certificados em PDF
+                            </p>
+                            <span class="btn btn-outline-primary mt-3">
+                                <i class="fas fa-external-link-alt me-2"></i>Acessar
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    {% endfor %}
 </div>
 
 <style>
-.certificate-card {
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.1);
+.certificate-link-card {
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
-.certificate-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+.certificate-link-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-color, #6c5ce7);
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
 }
 
-.certificate-badge {
+.certificate-link-icon {
+    color: var(--primary-color, #6c5ce7);
     transition: transform 0.3s ease;
 }
 
-.certificate-card:hover .certificate-badge {
-    transform: scale(1.05);
+.certificate-link-card:hover .certificate-link-icon {
+    transform: scale(1.1);
 }
 
-.issuer-section {
-    padding: 2rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.certificate-link-title {
+    font-weight: 700;
+    color: #fff;
 }
 
-.issuer-section:last-child {
-    border-bottom: none;
+.certificate-link-description {
+    font-size: 0.95rem;
+}
+
+.certificate-links-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
 }
 </style>
 {% endblock %}

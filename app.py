@@ -74,18 +74,23 @@ with app.app_context():
     import models  # noqa: F401
     db.create_all()
     
-    # Create admin user if not exists
+    # Create admin user if not exists - using environment variables for security
     from models import User
     from werkzeug.security import generate_password_hash
     
-    admin_user = User.query.filter_by(username="admin").first()
+    admin_username = os.environ.get("ADMIN_USERNAME", "admin")
+    admin_email = os.environ.get("ADMIN_EMAIL", "admin@example.com")
+    admin_password = os.environ.get("ADMIN_PASSWORD", "admin123")
+    admin_full_name = os.environ.get("ADMIN_FULL_NAME", "Administrator")
+    
+    admin_user = User.query.filter_by(username=admin_username).first()
     if not admin_user:
         admin_user = User()
-        admin_user.username = "admin"
-        admin_user.email = "admin@example.com"
-        admin_user.password_hash = generate_password_hash("admin123")
+        admin_user.username = admin_username
+        admin_user.email = admin_email
+        admin_user.password_hash = generate_password_hash(admin_password)
         admin_user.is_admin = True
-        admin_user.full_name = "Administrator"
+        admin_user.full_name = admin_full_name
         db.session.add(admin_user)
         db.session.commit()
 

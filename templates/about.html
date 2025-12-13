@@ -411,4 +411,14 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/cursor-effects.js') }}"></script>
+<script>
+function downloadCV() {
+    const link = document.createElement('a');
+    link.href = '/static/CV_Rai_Carvalho.pdf';
+    link.download = 'CV_Rai_Carvalho.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
 {% endblock %}
